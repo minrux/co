@@ -4,1198 +4,515 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>五年級英語學習扶助特訓測驗平台</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Phosphor Icons for UI accents -->
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+    :root {
+      --primary: #4F46E5;
+      --primary-hover: #4338CA;
+      --primary-light: #EEF2FF;
+      --success: #10B981;
+      --success-light: #ECFDF5;
+      --danger: #EF4444;
+      --danger-light: #FEF2F2;
+      --warning: #F59E0B;
+      --warning-light: #FFFBEB;
+      --bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --text: #1E293B;
+      --text-muted: #64748B;
+      --border: #E2E8F0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
     body {
-      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 24px 16px;
+      min-height: 100vh;
     }
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
+
+    .container {
+      width: 100%;
+      max-width: 760px;
     }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background-color: #CBD5E1;
-      border-radius: 9999px;
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
     }
-    .shake-anim {
-      animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+
+    header h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 6px;
     }
-    @keyframes shake {
-      10%, 90% { transform: translate3d(-1px, 0, 0); }
-      20%, 80% { transform: translate3d(2px, 0, 0); }
-      30%, 50%, 70% { transform: translate3d(-3px, 0, 0); }
-      40%, 60% { transform: translate3d(3px, 0, 0); }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* 領域篩選器面版 */
+    .filter-panel {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 18px 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+      border: 1px solid var(--border);
+      margin-bottom: 18px;
+    }
+
+    .filter-title {
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .filter-badge {
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .filter-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13.5px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: background 0.15s;
+    }
+
+    .filter-item:hover {
+      background: #F1F5F9;
+    }
+
+    .filter-item input {
+      accent-color: var(--primary);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    .filter-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+    }
+
+    .btn-small {
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 4px 6px;
+    }
+
+    .btn-start {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 24px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-start:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    /* 測驗進度條 */
+    .progress-box {
+      margin-bottom: 16px;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .progress-track {
+      background: #E2E8F0;
+      height: 8px;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      background: var(--primary);
+      transition: width 0.25s ease;
+    }
+
+    /* 題目卡片 */
+    .quiz-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 26px 28px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      border: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+
+    .tag-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 6px;
+    }
+
+    .tag.image-tag {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+
+    .btn-speak {
+      background: #F1F5F9;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--text);
+    }
+
+    .btn-speak:hover {
+      background: #E2E8F0;
+    }
+
+    /* 視覺圖形插圖展示區 */
+    .question-illustration {
+      background: #F8FAFC;
+      border: 1.5px dashed var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 12px 0 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .question-illustration svg {
+      max-width: 140px;
+      max-height: 140px;
+      margin-bottom: 8px;
+    }
+
+    .illustration-caption {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .question-stem {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.55;
+      margin-bottom: 20px;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .option-btn {
+      padding: 14px 18px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      text-align: left;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--primary);
+      background-color: var(--primary-light);
+    }
+
+    .option-btn.correct {
+      border-color: var(--success);
+      background-color: var(--success-light);
+      color: #065F46;
+      font-weight: 700;
+    }
+
+    .option-btn.wrong {
+      border-color: var(--danger);
+      background-color: var(--danger-light);
+      color: #991B1B;
+      font-weight: 700;
+    }
+
+    .feedback-box {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      line-height: 1.6;
+      display: none;
+    }
+
+    .feedback-box.correct {
+      background: var(--success-light);
+      border-left: 4px solid var(--success);
+      color: #065F46;
+    }
+
+    .feedback-box.wrong {
+      background: var(--danger-light);
+      border-left: 4px solid var(--danger);
+      color: #991B1B;
+    }
+
+    .btn-next {
+      margin-top: 20px;
+      width: 100%;
+      padding: 13px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      display: none;
+    }
+
+    .btn-next:hover {
+      background: var(--primary-hover);
+    }
+
+    /* 結算頁面 */
+    .result-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 32px 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      border: 1px solid var(--border);
+      text-align: center;
+      display: none;
+    }
+
+    .score-circle {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      font-weight: 800;
+      margin: 0 auto 18px;
+    }
+
+    .domain-report {
+      text-align: left;
+      margin: 24px 0;
+      background: #F8FAFC;
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .domain-report h4 {
+      margin-bottom: 12px;
+      font-size: 15px;
+    }
+
+    .domain-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 13.5px;
+    }
+
+    .mistake-list {
+      text-align: left;
+      margin-top: 20px;
+    }
+
+    .mistake-item {
+      background: #fff;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border-left: 3px solid var(--danger);
+      margin-bottom: 10px;
+      font-size: 13.5px;
+      border-right: 1px solid var(--border);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .btn-group-result {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 24px;
+    }
+
+    .btn-outline {
+      padding: 12px 24px;
+      background: #fff;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-outline:hover {
+      background: #F1F5F9;
     }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
+<body>
 
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-      <div class="flex items-center space-x-3 cursor-pointer" onclick="returnToHome()">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-white shadow-md shadow-indigo-100">
-          <i class="ph-bold ph-graduation-cap text-2xl"></i>
-        </div>
-        <div>
-          <span class="text-base sm:text-lg font-black tracking-tight text-slate-800 flex items-center gap-1.5">
-            英語學習扶助特訓營
-            <span class="text-xs px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 font-bold border border-indigo-200/60 hidden sm:inline-block">五年級通用版</span>
-          </span>
-          <p class="text-xs text-slate-500">自由選擇領域 • 每次精選 25 題 • 深度解析與發音</p>
-        </div>
-      </div>
-      
-      <!-- Top Action buttons -->
-      <div class="flex items-center gap-2 sm:gap-3">
-        <button id="audio-toggle-btn" onclick="toggleAudio()" class="px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-100 flex items-center gap-1.5 transition">
-          <i id="audio-icon" class="ph-bold ph-speaker-high text-indigo-600 text-sm"></i>
-          <span id="audio-status-text" class="hidden sm:inline">發音開啟</span>
-        </button>
-        <button onclick="showBankModal()" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-slate-700 flex items-center gap-1.5 transition">
-          <i class="ph-bold ph-database text-sm text-slate-500"></i>
-          <span>檢視題庫 (<span id="total-bank-count">320+</span>)</span>
-        </button>
-      </div>
-    </div>
+<div class="container">
+  <header>
+    <h1>五年級英語重點闖關特訓</h1>
+    <p>看圖理解 • 動作動詞 • 否定句構 • 日常生活問答</p>
   </header>
 
-  <main class="flex-1 max-w-5xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
-
-    <!-- SCREEN 1: Category Selection Screen (No Student Selection) -->
-    <section id="screen-home" class="space-y-6 max-w-3xl mx-auto w-full">
-      <!-- Banner Card -->
-      <div class="bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-700 rounded-3xl p-6 sm:p-8 text-white shadow-xl shadow-indigo-100 relative overflow-hidden">
-        <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
-        <div class="relative z-10 max-w-xl">
-          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-xs font-medium text-indigo-100 mb-3 border border-white/20">
-            <i class="ph-fill ph-sparkle text-amber-300"></i> 五年級精準學習扶助靶向模組
-          </div>
-          <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">自主選擇領域 • 25 題精熟特訓</h1>
-          <p class="mt-2 text-indigo-100 text-sm sm:text-base leading-relaxed">
-            針對五年級常見學習瓶頸：<strong>「動作動詞認讀、否定句 (not / can't)、時間問答、語音拼讀」</strong>。請勾選想強化的主題領域，系統將隨機洗牌抽出 25 題進行測驗！
-          </p>
-        </div>
+  <!-- 領域篩選器 -->
+  <div class="filter-panel" id="filterPanel">
+    <div class="filter-title">
+      <span>🎯 選擇特訓領域類型</span>
+      <span class="filter-badge" id="poolBadge">包含 320 題</span>
+    </div>
+    <div class="filter-grid" id="filterGrid">
+      <label class="filter-item">
+        <input type="checkbox" value="看圖辨識題" checked onchange="updatePoolCount()">
+        <span>🖼️ 看圖理解題 (情境/鐘面/動作)</span>
+      </label>
+      <label class="filter-item">
+        <input type="checkbox" value="動作動詞認讀" checked onchange="updatePoolCount()">
+        <span>🏃 動作動詞認讀 (read, jump, swim)</span>
+      </label>
+      <label class="filter-item">
+        <input type="checkbox" value="否定句構理解" checked onchange="updatePoolCount()">
+        <span>⛔ 否定句型理解 (not, can't, isn't)</span>
+      </label>
+      <label class="filter-item">
+        <input type="checkbox" value="日常對話理解" checked onchange="updatePoolCount()">
+        <span>💬 日常生活問答 (時間/年齡/常用語)</span>
+      </label>
+      <label class="filter-item">
+        <input type="checkbox" value="生活核心詞彙" checked onchange="updatePoolCount()">
+        <span>🍎 生活核心詞彙 (親屬/食物/天氣/情緒)</span>
+      </label>
+      <label class="filter-item">
+        <input type="checkbox" value="篇章閱讀理解" checked onchange="updatePoolCount()">
+        <span>📖 簡易篇章閱讀 (短文推論/主旨)</span>
+      </label>
+      <label class="filter-item">
+        <input type="checkbox" value="自然拼讀規則" checked onchange="updatePoolCount()">
+        <span>🔤 語音與字母拼讀 (sh, ch, th, 子音串)</span>
+      </label>
+    </div>
+    <div class="filter-actions">
+      <div>
+        <button class="btn-small" onclick="toggleSelectAll(true)">全部勾選</button>
+        <span style="color:var(--border)">|</span>
+        <button class="btn-small" onclick="toggleSelectAll(false)">清除重選</button>
       </div>
-
-      <!-- Domain Category Checkboxes -->
-      <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm space-y-5">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-100">
-          <div>
-            <h2 class="text-base font-extrabold text-slate-800 flex items-center gap-2">
-              <i class="ph-bold ph-sliders text-indigo-600"></i>
-              請選擇本次測驗的題型領域（可多選）
-            </h2>
-            <p class="text-xs text-slate-500 mt-0.5">目前已選領域共涵蓋 <span id="selected-pool-count" class="font-bold text-indigo-600">320</span> 題可供隨機抽測</p>
-          </div>
-          <div class="flex items-center gap-2 text-xs">
-            <button type="button" onclick="selectAllCategories(true)" class="px-2.5 py-1 rounded-md bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold transition">全部勾選</button>
-            <button type="button" onclick="selectAllCategories(false)" class="px-2.5 py-1 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold transition">清除重選</button>
-          </div>
-        </div>
-
-        <!-- Rendered categories -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="category-checkboxes">
-          <!-- Injected dynamically by JS -->
-        </div>
-
-        <!-- Action bar -->
-        <div class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div class="flex items-center gap-2 text-slate-600 text-xs sm:text-sm">
-            <i class="ph-bold ph-dice-three text-indigo-600 text-lg"></i>
-            <span>抽題機制：<span class="font-bold text-indigo-700">固定 25 題</span>（隨機洗牌，題目與選項不重複）</span>
-          </div>
-          <button onclick="startQuizSession()" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm sm:text-base shadow-lg shadow-indigo-200 transition transform active:scale-95 flex items-center justify-center gap-2">
-            <span>開始 25 題測驗</span>
-            <i class="ph-bold ph-arrow-right"></i>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- SCREEN 2: Active Testing Screen -->
-    <section id="screen-quiz" class="hidden max-w-3xl mx-auto w-full space-y-4">
-      <!-- Quiz Progress & Meta -->
-      <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs flex flex-col gap-3">
-        <div class="flex items-center justify-between text-xs sm:text-sm font-semibold text-slate-600">
-          <div class="flex items-center gap-2">
-            <span class="px-2.5 py-1 rounded-md bg-indigo-50 text-indigo-700 font-bold border border-indigo-100 flex items-center gap-1.5" id="quiz-category-badge">
-              <i class="ph-bold ph-tag"></i> 題型類別
-            </span>
-            <span class="text-slate-400">|</span>
-            <span class="text-slate-500 font-normal" id="quiz-subtag-badge">子標籤</span>
-          </div>
-          <div class="flex items-center gap-3">
-            <span class="text-slate-500">進度：<strong class="text-indigo-600 text-base" id="current-q-num">1</strong> / 25 題</span>
-            <button onclick="terminateQuizConfirm()" class="text-slate-400 hover:text-rose-500 text-xs px-2 py-1 rounded transition" title="結束本次測驗">放棄返回</button>
-          </div>
-        </div>
-        <!-- Progress Bar -->
-        <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
-          <div id="quiz-progress-bar" class="bg-indigo-600 h-full transition-all duration-300 w-0"></div>
-        </div>
-      </div>
-
-      <!-- Question Card -->
-      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm relative overflow-hidden" id="quiz-card">
-        <div class="flex items-center justify-between mb-4">
-          <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50/80 px-2.5 py-1 rounded-md border border-indigo-100" id="q-subtag">
-            Question Subtype
-          </span>
-          <button onclick="speakCurrentQuestion()" class="p-2 rounded-xl bg-slate-50 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 transition flex items-center gap-1.5 text-xs font-semibold" title="朗讀題目與英文單字">
-            <i class="ph-fill ph-speaker-high text-lg text-indigo-500"></i>
-            <span>朗讀題目</span>
-          </button>
-        </div>
-
-        <!-- Stem -->
-        <div class="text-lg sm:text-xl font-bold text-slate-800 leading-snug mb-6" id="q-stem">
-          題目加載中...
-        </div>
-
-        <!-- Options Container -->
-        <div class="space-y-3" id="q-options-container">
-          <!-- Option buttons rendered dynamically -->
-        </div>
-
-        <!-- Feedback Drawer (Shows on answer selected) -->
-        <div id="q-feedback-drawer" class="hidden mt-6 p-4 sm:p-5 rounded-2xl border transition-all duration-200">
-          <div class="flex items-start gap-3">
-            <div id="feedback-icon-wrapper" class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5">
-              <i id="feedback-icon" class="ph-bold text-lg"></i>
-            </div>
-            <div class="flex-1 text-sm space-y-1">
-              <p id="feedback-verdict" class="font-bold text-base"></p>
-              <p id="feedback-explanation" class="text-slate-600 leading-relaxed"></p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Next / Continue Button -->
-        <div class="mt-6 flex justify-end">
-          <button id="q-next-btn" onclick="goToNextQuestion()" class="hidden px-7 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-md shadow-indigo-100 transition items-center gap-2">
-            <span id="next-btn-text">下一題</span>
-            <i class="ph-bold ph-arrow-right"></i>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- SCREEN 3: Comprehensive Report Screen -->
-    <section id="screen-report" class="hidden max-w-3xl mx-auto w-full space-y-6">
-      <!-- Result Summary Card -->
-      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm text-center relative overflow-hidden">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-bold mb-3">
-          <i class="ph-fill ph-chart-donut text-indigo-500"></i> 本次 25 題學習評量診斷報告
-        </div>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800">測驗成果與能力分析</h2>
-        
-        <!-- Score Radial Display -->
-        <div class="my-6 flex flex-col items-center justify-center">
-          <div class="relative w-36 h-36 flex items-center justify-center">
-            <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-              <path class="text-slate-100" stroke-width="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-              <path id="score-circle-path" class="text-indigo-600 transition-all duration-1000 ease-out" stroke-dasharray="0, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-            </svg>
-            <div class="absolute flex flex-col items-center">
-              <span class="text-3xl sm:text-4xl font-black text-slate-800 tracking-tight" id="report-score-num">0</span>
-              <span class="text-xs font-semibold text-slate-400">總分 (滿分100)</span>
-            </div>
-          </div>
-          <div class="mt-2 text-xs sm:text-sm font-semibold text-slate-500">
-            答對 <span id="report-correct-count" class="text-emerald-600 font-bold text-base">0</span> 題 / 共 25 題 • 正確率 <span id="report-percent-text" class="text-indigo-600 font-bold">0%</span>
-          </div>
-        </div>
-
-        <!-- Diagnostic Feedback Text -->
-        <div class="text-left bg-slate-50 rounded-2xl p-5 border border-slate-200/80 mb-6">
-          <h3 class="text-sm font-bold text-slate-700 flex items-center gap-1.5 mb-2">
-            <i class="ph-bold ph-clipboard-text text-indigo-600"></i> 綜合診斷與學習處方：
-          </h3>
-          <p id="report-diagnostic-advice" class="text-xs sm:text-sm text-slate-600 leading-relaxed"></p>
-        </div>
-
-        <!-- Category Breakdown Stats -->
-        <div class="space-y-3 mb-6 text-left">
-          <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">各測驗領域掌握度明細</h4>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5" id="report-category-breakdown">
-            <!-- Filled dynamically -->
-          </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="flex flex-col sm:flex-row gap-3 justify-center pt-3 border-t border-slate-100">
-          <button onclick="toggleMistakeReview()" id="btn-toggle-mistakes" class="px-5 py-3 rounded-xl border border-rose-200 bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold text-sm flex items-center justify-center gap-2 transition">
-            <i class="ph-bold ph-warning-circle text-base"></i>
-            <span id="mistake-toggle-text">檢視本次錯題 (<span id="report-mistake-count">0</span>)</span>
-          </button>
-          <button onclick="restartTestWithSameSettings()" class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-md shadow-indigo-100 transition flex items-center justify-center gap-2">
-            <i class="ph-bold ph-arrows-clockwise text-base"></i>
-            <span>再抽 25 題反覆特訓</span>
-          </button>
-          <button onclick="returnToHome()" class="px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm transition flex items-center justify-center gap-2">
-            <i class="ph-bold ph-sliders text-base"></i>
-            <span>更換題型領域</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Mistake Review Drawer -->
-      <div id="mistake-review-container" class="hidden bg-white rounded-3xl p-6 border border-rose-200 shadow-sm space-y-4">
-        <div class="flex items-center justify-between pb-3 border-b border-rose-100">
-          <h3 class="font-bold text-slate-800 text-base flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>
-            錯題深入複習與解析清單
-          </h3>
-          <span class="text-xs text-slate-500">點擊朗讀鈕可反覆練習字音</span>
-        </div>
-        <div class="space-y-4 max-h-[500px] overflow-y-auto pr-1 custom-scrollbar" id="mistake-items-list">
-          <!-- Filled by JS -->
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- MODAL: Full Question Bank Inspector -->
-  <div id="modal-bank" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-3xl w-full max-h-[85vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
-      <div class="p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50">
-        <div>
-          <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
-            <i class="ph-bold ph-books text-indigo-600"></i>
-            五年級英語 320+ 完整題庫檢視
-          </h3>
-          <p class="text-xs text-slate-500 mt-0.5">涵蓋動作動詞、否定句構、對話與拼讀之完整題庫</p>
-        </div>
-        <button onclick="closeBankModal()" class="w-8 h-8 rounded-full bg-white hover:bg-slate-200 flex items-center justify-center text-slate-500">
-          <i class="ph-bold ph-x"></i>
-        </button>
-      </div>
-
-      <div class="p-4 border-b border-slate-100 flex flex-wrap gap-2 items-center justify-between bg-white text-xs">
-        <div class="flex items-center gap-2">
-          <span>篩選分類：</span>
-          <select id="modal-filter-category" onchange="filterBankDisplay()" class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-700">
-            <option value="ALL">全部分類 (全部 320+ 題)</option>
-          </select>
-        </div>
-        <span class="text-slate-400 font-medium" id="modal-showing-count">顯示 320 題</span>
-      </div>
-
-      <div class="p-4 sm:p-6 overflow-y-auto flex-1 custom-scrollbar space-y-3 bg-slate-50/50" id="modal-questions-list">
-        <!-- Rendered by JS -->
-      </div>
-      
-      <div class="p-4 bg-white border-t border-slate-200 flex justify-end">
-        <button onclick="closeBankModal()" class="px-5 py-2 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold">
-          關閉視窗
-        </button>
-      </div>
+      <button class="btn-start" onclick="startNewSession()">🚀 開始 25 題測驗</button>
     </div>
   </div>
 
-  <script>
-    // 測驗題型主分類定義（純領域維度，不再繫結學生個資）
-    const CATEGORIES = {
-      verbs: { 
-        id: "verbs", 
-        name: "動作動詞認讀 (Action Verbs)", 
-        badge: "0% 答對率強化", 
-        color: "indigo", 
-        desc: "重點練習 read, jump, swim, cook, draw, ride, write, fly, play 等動詞字形認讀與意義配對。" 
-      },
-      negation: { 
-        id: "negation", 
-        name: "否定句構與情態動詞 (Negation)", 
-        badge: "核心迷思突破", 
-        color: "rose", 
-        desc: "重點辨識 not sunny, can't swim, isn't, aren't, don't 等否定結構，克服閱讀慣性盲點。" 
-      },
-      dialogue: { 
-        id: "dialogue", 
-        name: "日常對話與時間問答 (Dialogue)", 
-        badge: "實用溝通", 
-        color: "sky", 
-        desc: "精熟 What time is it?, How's the weather?, How old are you?, Can you...? 等生活對答。" 
-      },
-      words_topic: { 
-        id: "words_topic", 
-        name: "基礎生活字彙 (Vocabulary)", 
-        badge: "基礎詞彙", 
-        color: "emerald", 
-        desc: "精熟天氣(sunny/rainy/cold)、食物(milk/hamburger)、親屬(brother/sister)與情緒形容詞。" 
-      },
-      reading_syntax: { 
-        id: "reading_syntax", 
-        name: "代名詞與篇章理解 (Syntax & Reading)", 
-        badge: "閱讀句構", 
-        color: "purple", 
-        desc: "人稱代名詞 (He/She/They)、be動詞搭配 (is/am/are) 與五年級簡易短文訊息圈找。" 
-      },
-      phonics: { 
-        id: "phonics", 
-        name: "語音拼讀規則 (Phonics)", 
-        badge: "音字對應", 
-        color: "amber", 
-        desc: "字首字尾雙字母子音 (sh, ch, th) 與子音群 (bl, br, st, sk) 的聽辨與看字讀音。" 
-      }
-    };
-
-    let ALL_QUESTIONS = [];
-    let selectedCategories = Object.keys(CATEGORIES); // 預設全選
-    let currentQuizQueue = [];
-    let currentQIndex = 0;
-    let quizScore = 0;
-    let answeredCurrent = false;
-    let mistakeLog = [];
-    let audioEnabled = true;
-
-    function generateComprehensiveQuestionBank() {
-      const bank = [];
-
-      // 1. 動作動詞大類 (70+ 題)
-      const actionVerbs = [
-        { word: "read", zh: "閱讀、看書", sentence: "I can read an English storybook.", dist: ["swim", "jump", "cook"] },
-        { word: "jump", zh: "跳躍", sentence: "The rabbit can jump very high.", dist: ["eat", "sleep", "sing"] },
-        { word: "swim", zh: "游泳", sentence: "Fish can swim in the blue water.", dist: ["fly", "write", "read"] },
-        { word: "cook", zh: "煮飯、烹飪", sentence: "My dad can cook delicious dinner.", dist: ["draw", "run", "climb"] },
-        { word: "draw", zh: "畫圖", sentence: "She likes to draw pretty pictures.", dist: ["drink", "wash", "listen"] },
-        { word: "sing", zh: "唱歌", sentence: "They can sing English songs together.", dist: ["sleep", "jump", "ride"] },
-        { word: "dance", zh: "跳舞", sentence: "The girl can dance gracefully.", dist: ["cook", "read", "swim"] },
-        { word: "ride", zh: "騎 (車/馬)", sentence: "Can you ride a bicycle in the park?", dist: ["fly", "walk", "cut"] },
-        { word: "write", zh: "寫字", sentence: "Please write your name on the paper.", dist: ["read", "kick", "sleep"] },
-        { word: "run", zh: "跑步", sentence: "The boys can run fast in gym class.", dist: ["sit", "sleep", "drink"] },
-        { word: "sleep", zh: "睡覺", sentence: "Babies sleep for many hours every day.", dist: ["eat", "jump", "climb"] },
-        { word: "eat", zh: "吃", sentence: "I want to eat a hamburger for lunch.", dist: ["drink", "run", "draw"] },
-        { word: "drink", zh: "喝", sentence: "Drink some warm water when you are thirsty.", dist: ["eat", "sing", "jump"] },
-        { word: "fly", zh: "飛翔", sentence: "Birds can fly high in the sunny sky.", dist: ["swim", "crawl", "cook"] },
-        { word: "play", zh: "玩耍、打球", sentence: "We can play basketball after school.", dist: ["study", "sleep", "wash"] },
-        { word: "listen", zh: "聆聽", sentence: "Please listen to the English teacher.", dist: ["speak", "draw", "read"] },
-        { word: "wash", zh: "洗滌、洗手", sentence: "Wash your hands before eating dinner.", dist: ["drink", "cook", "cut"] },
-        { word: "climb", zh: "攀爬", sentence: "Monkeys can climb tall trees easily.", dist: ["swim", "write", "sing"] }
-      ];
-
-      actionVerbs.forEach((v, index) => {
-        // 題型 A：看英文句選字義
-        bank.push({
-          id: `verb_a_${index}`,
-          category: "verbs",
-          subtag: "動詞字形認讀",
-          stem: `選出劃線單字的中文意思：<br>「${v.sentence.replace(v.word, `<u>${v.word}</u>`)}」`,
-          options: [v.zh, "睡覺休息", "吃東西", "洗衣服"],
-          correct: 0,
-          audioText: v.sentence,
-          explain: `「${v.word}」的意思是「${v.zh}」。`
-        });
-        // 題型 B：填空題 (I can ____)
-        bank.push({
-          id: `verb_b_${index}`,
-          category: "verbs",
-          subtag: "動作語意填空",
-          stem: `選出正確的動詞填空：<br>「${v.sentence.replace(v.word, "_______")}」`,
-          options: shuffleArray([v.word, v.dist[0], v.dist[1], v.dist[2]]),
-          get correct() { return this.options.indexOf(v.word); },
-          audioText: v.sentence,
-          explain: `根據句意，應選「${v.word} (${v.zh})」，其他選項語意不合。`
-        });
-        // 題型 C：生活情境配對
-        bank.push({
-          id: `verb_c_${index}`,
-          category: "verbs",
-          subtag: "情境應用",
-          stem: `想要表達「${v.zh}」這個動作時，英文應該使用哪一個單字？`,
-          options: shuffleArray([v.word, v.dist[0], v.dist[1], v.dist[2]]),
-          get correct() { return this.options.indexOf(v.word); },
-          audioText: v.word,
-          explain: `「${v.zh}」對應的英文單字是「${v.word}」。`
-        });
-        // 題型 D：否定動詞情境
-        bank.push({
-          id: `verb_d_${index}`,
-          category: "verbs",
-          subtag: "能力動詞句",
-          stem: `看句選意思：<br>「I can't <strong>${v.word}</strong>.」這句話代表什麼？`,
-          options: [
-            `我不會${v.zh}。`,
-            `我正在${v.zh}。`,
-            `我非常喜歡${v.zh}。`,
-            `請你${v.zh}給我看。`
-          ],
-          correct: 0,
-          audioText: `I can't ${v.word}.`,
-          explain: `can't 代表「不會、無法」，後接動詞原形 ${v.word} (${v.zh})。`
-        });
-      });
-
-      // 2. 否定句構大類 (65+ 題)
-      const negationPatterns = [
-        { sent: "It is not sunny today.", zh: "今天不是晴天。", focal: "not sunny", exp: "看到 not sunny 表示「不是晴天」，切勿誤看成「是晴天」。" },
-        { sent: "He is not my brother.", zh: "他不是我的哥哥（弟弟）。", focal: "not my brother", exp: "is not 表示「不是」。" },
-        { sent: "I can't swim in deep water.", zh: "我不會在深水裡游泳。", focal: "can't swim", exp: "can't 是 can not 的縮寫，代表「不會、無法」。" },
-        { sent: "She cannot read this word.", zh: "她不會念/讀這個字。", focal: "cannot read", exp: "cannot 代表「不會、不能」，read 是閱讀。" },
-        { sent: "They are not happy today.", zh: "他們今天不高興。", focal: "not happy", exp: "not happy 表示不快樂、不高興。" },
-        { sent: "It is not cold outside.", zh: "外面不會冷。", focal: "not cold", exp: "not cold 表示不冷。" },
-        { sent: "I do not want milk.", zh: "我不想要牛奶。", focal: "do not want", exp: "do not 表示否定「不想要」。" },
-        { sent: "He isn't ten years old.", zh: "他不是十歲。", focal: "isn't", exp: "isn't = is not，表示「不是」。" },
-        { sent: "The cat isn't fat.", zh: "這隻貓不胖。", focal: "isn't fat", exp: "isn't fat 代表「不胖、身材適中或瘦」。" },
-        { sent: "We can't ride bikes here.", zh: "我們不能在這裡騎腳踏車。", focal: "can't ride", exp: "can't 表示「不能、禁止」。" },
-        { sent: "She isn't sad; she is angry.", zh: "她不是難過，她很生氣。", focal: "isn't sad", exp: "前段否定 isn't sad (不難過)，後段肯定 angry (生氣)。" },
-        { sent: "It's not raining now.", zh: "現在沒有在下雨。", focal: "not raining", exp: "not raining 代表「沒下雨」。" },
-        { sent: "I'm not tired at all.", zh: "我一點都不累。", focal: "not tired", exp: "not tired 代表「不疲倦、有精神」。" },
-        { sent: "They aren't teachers.", zh: "他們不是老師。", focal: "aren't", exp: "aren't = are not，指複數「不是」。" },
-        { sent: "He cannot find his pencil.", zh: "他找不到他的鉛筆。", focal: "cannot find", exp: "cannot find 表示找不到。" },
-        { sent: "It is not a small dog.", zh: "這不是一隻小狗。", focal: "not a small dog", exp: "not small 表示不小（可能很大隻）。" }
-      ];
-
-      negationPatterns.forEach((item, idx) => {
-        bank.push({
-          id: `neg_a_${idx}`,
-          category: "negation",
-          subtag: "否定句意判斷",
-          stem: `讀句子選出正確的中文意思：<br>「<strong>${item.sent}</strong>」`,
-          options: [
-            item.zh,
-            item.zh.replace("不", "非常").replace("沒", "正在"),
-            item.zh.replace("他", "你").replace("我", "他"),
-            "請大聲再念一次這句話"
-          ],
-          correct: 0,
-          audioText: item.sent,
-          explain: `${item.exp} 特別注意句中的否定標記！`
-        });
-        bank.push({
-          id: `neg_b_${idx}`,
-          category: "negation",
-          subtag: "否定文法選擇",
-          stem: `選出正確的文法字詞填入空格：<br>「I ________ jump high. (我不會跳得很高)」`,
-          options: ["can't", "no can", "am not", "not can"],
-          correct: 0,
-          audioText: "I can't jump high.",
-          explain: "英文表達能力否定要用「can't (can not) + 原形動詞」，不可說 no can 或 not can。"
-        });
-        bank.push({
-          id: `neg_c_${idx}`,
-          category: "negation",
-          subtag: "情境推論",
-          stem: `如果媽媽說：\"<strong>It's not hot today. Put on a jacket.</strong>\"<br>請問今天氣溫如何？`,
-          options: [
-            "今天不會熱，需要穿外套",
-            "今天非常炎熱，去游泳吧",
-            "今天是晴天，不用穿外套",
-            "今天下大雨，趕快帶雨傘"
-          ],
-          correct: 0,
-          audioText: "It's not hot today. Put on a jacket.",
-          explain: "not hot 表示不熱，後面又說 put on a jacket (穿外套)，表示天氣偏涼。"
-        });
-        bank.push({
-          id: `neg_d_${idx}`,
-          category: "negation",
-          subtag: "句子轉換",
-          stem: `將肯定句 \"He is tall.\" 改寫為「否定句（他並不高）」，正確寫法為何？`,
-          options: [
-            "He is not tall.",
-            "He not is tall.",
-            "He isn't not tall.",
-            "He does not tall."
-          ],
-          correct: 0,
-          audioText: "He is not tall.",
-          explain: "be動詞 (is/am/are) 的否定直接在後面加上 not，形成 is not (isn't)。"
-        });
-      });
-
-      // 3. 日常對話與時間問答大類 (60+ 題)
-      const dialogues = [
-        { q: "What time is it now?", a: "It's ten o'clock.", zhQ: "現在幾點？", zhA: "現在十點鐘。", dist: ["I'm ten years old.", "I have ten pencils.", "It's sunny today."] },
-        { q: "How old are you?", a: "I am eleven years old.", zhQ: "你幾歲？", zhA: "我十一歲。", dist: ["It's eleven o'clock.", "I am fine, thank you.", "She is my sister."] },
-        { q: "How is the weather today?", a: "It is rainy and cool.", zhQ: "今天天氣如何？", zhA: "陰雨且涼爽。", dist: ["I like red apples.", "It's five o'clock.", "He is very tall."] },
-        { q: "Can you ride a bicycle?", a: "Yes, I can.", zhQ: "你會騎腳踏車嗎？", zhA: "是的，我會。", dist: ["No, I am not.", "I am twelve.", "It's a pencil."] },
-        { q: "Can she speak English?", a: "No, she can't.", zhQ: "她會說英語嗎？", zhA: "不，她不會。", dist: ["No, he isn't.", "Yes, they are.", "She is at school."] },
-        { q: "What do you want for lunch?", a: "I want noodles, please.", zhQ: "你午餐想要吃什麼？", zhA: "我想要吃麵，謝謝。", dist: ["It's twelve o'clock.", "I am sad.", "I can jump."] },
-        { q: "Where is my English book?", a: "It is under the desk.", zhQ: "我的英文書在哪裡？", zhA: "它在書桌下面。", dist: ["It is four o'clock.", "Yes, I can read.", "I don't like it."] },
-        { q: "Are you hungry?", a: "Yes, I am.", zhQ: "你肚子餓了嗎？", zhA: "是的，我肚子餓了。", dist: ["Yes, I can.", "No, it's not sunny.", "I am a boy."] },
-        { q: "Who is that tall man?", a: "He is my uncle.", zhQ: "那個高個子男人是誰？", zhA: "他是我叔叔/舅舅。", dist: ["It's seven o'clock.", "He can swim.", "She is my mother."] },
-        { q: "May I borrow your ruler?", a: "Sure, here you are.", zhQ: "我可以借你的尺嗎？", zhA: "當然，拿去吧。", dist: ["I'm nine years old.", "It's cloudy.", "No, I can't dance."] },
-        { q: "Is it cold today?", a: "No, it's not. It's warm.", zhQ: "今天很冷嗎？", zhA: "不冷，今天很溫暖。", dist: ["Yes, I am.", "It's eight o'clock.", "I can ride a bike."] },
-        { q: "What color is the pen?", a: "It is blue.", zhQ: "這枝筆是什麼顏色？", zhA: "它是藍色的。", dist: ["It is three o'clock.", "I have two pens.", "Yes, it is big."] },
-        { q: "What time do you go to bed?", a: "At nine thirty.", zhQ: "你幾點上床睡覺？", zhA: "九點三十分。", dist: ["I'm nine years old.", "It's sunny.", "I can sleep."] }
-      ];
-
-      dialogues.forEach((d, idx) => {
-        bank.push({
-          id: `dlg_a_${idx}`,
-          category: "dialogue",
-          subtag: "情境問答對話",
-          stem: `選出最適當的對話回應：<br><strong>A: \"${d.q}\"</strong><br><strong>B: \"_________________\"</strong>`,
-          options: shuffleArray([d.a, d.dist[0], d.dist[1], d.dist[2]]),
-          get correct() { return this.options.indexOf(d.a); },
-          audioText: `${d.q} ${d.a}`,
-          explain: `問句「${d.q}」的意思是「${d.zhQ}」，正確回答應為「${d.a} (${d.zhA})」。`
-        });
-        bank.push({
-          id: `dlg_b_${idx}`,
-          category: "dialogue",
-          subtag: "反向問句推論",
-          stem: `如果朋友回答：\"<strong>${d.a}</strong>\"<br>請問他剛才被問了什麼問題？`,
-          options: shuffleArray([d.q, "Where are you from?", "What is your name?", "Are you happy?"]),
-          get correct() { return this.options.indexOf(d.q); },
-          audioText: d.a,
-          explain: `看到回答「${d.a} (${d.zhA})」，對應的問句是「${d.q} (${d.zhQ})」。`
-        });
-        bank.push({
-          id: `dlg_c_${idx}`,
-          category: "dialogue",
-          subtag: "關鍵字防呆辨析",
-          stem: `聽到關鍵字 \"<strong>What time</strong>\" 時，問的是什麼？`,
-          options: ["詢問具體時間 (幾點幾分)", "詢問年齡 (幾歲)", "詢問天氣好不好", "詢問物品價格"],
-          correct: 0,
-          audioText: "What time is it now?",
-          explain: "What time 專門詢問「時間鐘點」；詢問年齡要用 How old。"
-        });
-        bank.push({
-          id: `dlg_d_${idx}`,
-          category: "dialogue",
-          subtag: "問答助動詞一致",
-          stem: `用 \"Can you...?\" 提問時，否定回答應該說什麼？`,
-          options: ["No, I can't.", "No, I am not.", "No, I don't.", "No, it isn't."],
-          correct: 0,
-          audioText: "No, I can't.",
-          explain: "用 Can 提問，簡答就要用 can 或 can't 回答，保持助動詞前後一致。"
-        });
-      });
-
-      // 4. 主題單字大類 (60+ 題)
-      const topicVocab = [
-        { en: "father", zh: "父親、爸爸", group: "親屬", dist: ["mother", "brother", "sister"] },
-        { en: "mother", zh: "母親、媽媽", group: "親屬", dist: ["father", "uncle", "aunt"] },
-        { en: "brother", zh: "兄弟、哥哥弟弟", group: "親屬", dist: ["sister", "father", "cousin"] },
-        { en: "sister", zh: "姊妹、姊姊妹妹", group: "親屬", dist: ["brother", "mother", "uncle"] },
-        { en: "sunny", zh: "晴朗的、出太陽的", group: "天氣", dist: ["rainy", "cloudy", "windy"] },
-        { en: "rainy", zh: "下雨的、多雨的", group: "天氣", dist: ["sunny", "snowy", "cold"] },
-        { en: "cloudy", zh: "多雲的、陰天的", group: "天氣", dist: ["sunny", "hot", "warm"] },
-        { en: "cold", zh: "寒冷的", group: "天氣氣溫", dist: ["hot", "warm", "cool"] },
-        { en: "hot", zh: "炎熱的", group: "天氣氣溫", dist: ["cold", "cool", "rainy"] },
-        { en: "happy", zh: "快樂的高興的", group: "情緒感受", dist: ["sad", "angry", "tired"] },
-        { en: "sad", zh: "難過的悲傷的", group: "情緒感受", dist: ["happy", "bored", "angry"] },
-        { en: "angry", zh: "生氣的憤怒的", group: "情緒感受", dist: ["happy", "calm", "tired"] },
-        { en: "tired", zh: "疲倦的累的", group: "情緒感受", dist: ["energetic", "happy", "hot"] },
-        { en: "hamburger", zh: "漢堡", group: "食物", dist: ["hot dog", "sandwich", "noodles"] },
-        { en: "milk", zh: "牛奶", group: "食物飲料", dist: ["juice", "water", "tea"] },
-        { en: "short", zh: "矮的或短的", group: "體型外表", dist: ["tall", "fat", "thin"] },
-        { en: "tall", zh: "高大的", group: "體型外表", dist: ["short", "small", "sad"] }
-      ];
-
-      topicVocab.forEach((w, idx) => {
-        bank.push({
-          id: `vocab_a_${idx}`,
-          category: "words_topic",
-          subtag: `${w.group}單字認讀`,
-          stem: `選出單字「<strong>${w.en}</strong>」的正確中文意思：`,
-          options: shuffleArray([w.zh, "西瓜", "鉛筆", "公車"]),
-          get correct() { return this.options.indexOf(w.zh); },
-          audioText: w.en,
-          explain: `「${w.en}」是五年級核心${w.group}單字，中文意思是「${w.zh}」。`
-        });
-        bank.push({
-          id: `vocab_b_${idx}`,
-          category: "words_topic",
-          subtag: `${w.group}拼字辨識`,
-          stem: `想要說「<strong>${w.zh}</strong>」，英文是哪一個單字？`,
-          options: shuffleArray([w.en, w.dist[0], w.dist[1], w.dist[2]]),
-          get correct() { return this.options.indexOf(w.en); },
-          audioText: w.en,
-          explain: `「${w.zh}」對應的英文單字為「${w.en}」。`
-        });
-        bank.push({
-          id: `vocab_c_${idx}`,
-          category: "words_topic",
-          subtag: "情境造句辨析",
-          stem: `句子中的空格填入哪一個字最符合常理？<br>「Drink some warm ________ before going to bed.」`,
-          options: ["milk", "pencil", "book", "sunny"],
-          correct: 0,
-          audioText: "Drink some warm milk before going to bed.",
-          explain: "動詞為 Drink (喝)，名詞只有 milk (牛奶) 可以飲用。"
-        });
-        bank.push({
-          id: `vocab_d_${idx}`,
-          category: "words_topic",
-          subtag: "生活常識配對",
-          stem: `當天氣是「<strong>rainy</strong>」時，出門最需要攜帶什麼？`,
-          options: ["an umbrella (雨傘)", "sunglasses (太陽眼鏡)", "a basketball (籃球)", "swimming suit (泳衣)"],
-          correct: 0,
-          audioText: "Take an umbrella on a rainy day.",
-          explain: "rainy 是雨天，出門需要帶 umbrella (雨傘)。"
-        });
-      });
-
-      // 5. 句子閱讀與代名詞大類 (50+ 題)
-      const syntaxTemplates = [
-        { subj: "He", verb: "is", obj: "tall and strong", zhSubj: "他", wrongSubj: "She", wrongVerb: "are" },
-        { subj: "She", verb: "is", obj: "short and cute", zhSubj: "她", wrongSubj: "He", wrongVerb: "am" },
-        { subj: "They", verb: "are", obj: "good friends", zhSubj: "他們", wrongSubj: "He", wrongVerb: "is" },
-        { subj: "I", verb: "am", obj: "a fifth-grade student", zhSubj: "我", wrongSubj: "They", wrongVerb: "is" },
-        { subj: "It", verb: "has", obj: "a long tail", zhSubj: "它", wrongSubj: "We", wrongVerb: "have" }
-      ];
-
-      for (let i = 0; i < 11; i++) {
-        const item = syntaxTemplates[i % syntaxTemplates.length];
-        bank.push({
-          id: `syn_a_${i}`,
-          category: "reading_syntax",
-          subtag: "代名詞與 be 動詞配對",
-          stem: `選出文法正確的句子：`,
-          options: [
-            `${item.subj} ${item.verb} ${item.obj}.`,
-            `${item.subj} ${item.wrongVerb} ${item.obj}.`,
-            `${item.subj} not ${item.verb} ${item.obj}.`,
-            `${item.subj} am ${item.obj}.`
-          ],
-          correct: 0,
-          audioText: `${item.subj} ${item.verb} ${item.obj}.`,
-          explain: `主詞 ${item.subj} 應搭配 be 動詞「${item.verb}」，不可混用 ${item.wrongVerb}。`
-        });
-        bank.push({
-          id: `syn_b_${i}`,
-          category: "reading_syntax",
-          subtag: "人稱代名詞性別辨識",
-          stem: `如果文中主角是男生「Peter」，在後面提到他時要用哪個人稱代名詞？`,
-          options: ["He (他)", "She (她)", "It (它)", "They (他們)"],
-          correct: 0,
-          audioText: "Peter is my friend. He is tall.",
-          explain: "Peter 是男性人稱，代名詞使用「He」。女性則使用「She」。"
-        });
-        bank.push({
-          id: `syn_c_${i}`,
-          category: "reading_syntax",
-          subtag: "情態動詞與原形動詞",
-          stem: `看句子選出正確形式：<br>「My brother can ________ fast.」`,
-          options: ["run", "running", "runs", "is run"],
-          correct: 0,
-          audioText: "My brother can run fast.",
-          explain: "助動詞 can 的後面一定要接「原形動詞 (run)」，不可加 s 或 ing。"
-        });
-        bank.push({
-          id: `syn_d_${i}`,
-          category: "reading_syntax",
-          subtag: "短文訊息圈找",
-          stem: `閱讀短文：<br>\"<em>Look at Tony. He is eleven years old. He can play basketball, but he can't swim.</em>\"<br>請問 Tony 不會做什麼？`,
-          options: ["不會游泳 (can't swim)", "不會打籃球", "不會跑", "不會讀書"],
-          correct: 0,
-          audioText: "He can play basketball, but he can't swim.",
-          explain: "文中寫道「but he can't swim」，表示他不會游泳。"
-        });
-      }
-
-      // 6. 自然拼讀大類 (50+ 題)
-      const phonicsRules = [
-        { sound: "sh", words: ["ship", "fish", "shop", "shoe"], zh: "sh 發音 /ʃ/" },
-        { sound: "ch", words: ["chin", "chips", "chair", "lunch"], zh: "ch 發音 /tʃ/" },
-        { sound: "th", words: ["thin", "think", "three", "thank"], zh: "th 無聲發音 /θ/" },
-        { sound: "bl", words: ["blue", "black", "blow"], zh: "bl 子音串 /bl/" },
-        { sound: "br", words: ["brown", "bread", "brother"], zh: "br 子音串 /br/" },
-        { sound: "st", words: ["stop", "star", "desk"], zh: "st 子音串 /st/" },
-        { sound: "sk", words: ["sky", "skate", "desk"], zh: "sk 子音串 /sk/" }
-      ];
-
-      phonicsRules.forEach((rule, idx) => {
-        rule.words.forEach((w, wIdx) => {
-          bank.push({
-            id: `pho_${idx}_${wIdx}`,
-            category: "phonics",
-            subtag: "字母拼讀規則",
-            stem: `選出含有「<strong>${rule.sound}</strong>」發音的單字：`,
-            options: shuffleArray([w, "cat", "dog", "pen"]),
-            get correct() { return this.options.indexOf(w); },
-            audioText: w,
-            explain: `單字「${w}」含有 ${rule.zh} 的拼讀規則。`
-          });
-        });
-      });
-
-      // 擴充至 320 題以上
-      while (bank.length < 325) {
-        const i = bank.length;
-        bank.push({
-          id: `extra_${i}`,
-          category: "verbs",
-          subtag: "動作動詞強化",
-          stem: `選出與「閱讀、看書 (read)」不同動作的單字：`,
-          options: ["jump (跳躍)", "read a book", "read words", "read stories"],
-          correct: 0,
-          audioText: "jump",
-          explain: "jump 是跳躍，其他三個選項皆與 read (閱讀) 相關。"
-        });
-      }
-
-      return bank;
-    }
-
-    function shuffleArray(arr) {
-      const copy = [...arr];
-      for (let i = copy.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [copy[i], copy[j]] = [copy[j], copy[i]];
-      }
-      return copy;
-    }
-
-    window.onload = function() {
-      ALL_QUESTIONS = generateComprehensiveQuestionBank();
-      document.getElementById("total-bank-count").innerText = `${ALL_QUESTIONS.length} 題`;
-      renderCategoryCheckboxes();
-      updateSelectedPoolCount();
-      populateBankModal();
-    };
-
-    function renderCategoryCheckboxes() {
-      const container = document.getElementById("category-checkboxes");
-      container.innerHTML = "";
-      Object.values(CATEGORIES).forEach((cat) => {
-        const isChecked = selectedCategories.includes(cat.id);
-        const card = document.createElement("label");
-        card.className = `p-3.5 rounded-2xl border flex items-start gap-3.5 cursor-pointer transition select-none ${
-          isChecked ? "border-indigo-400 bg-indigo-50/50 shadow-xs" : "border-slate-200 bg-white hover:bg-slate-50"
-        }`;
-        card.innerHTML = `
-          <input type="checkbox" value="${cat.id}" ${isChecked ? "checked" : ""} onchange="toggleCategory('${cat.id}')" class="mt-1 h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
-          <div class="flex-1">
-            <div class="flex items-center gap-2">
-              <span class="text-xs sm:text-sm font-bold text-slate-800">${cat.name}</span>
-              <span class="text-[10px] px-1.5 py-0.5 rounded font-bold bg-indigo-100 text-indigo-700">${cat.badge}</span>
-            </div>
-            <p class="text-[11px] text-slate-500 mt-1 leading-relaxed">${cat.desc}</p>
-          </div>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    function toggleCategory(catId) {
-      if (selectedCategories.includes(catId)) {
-        selectedCategories = selectedCategories.filter(id => id !== catId);
-      } else {
-        selectedCategories.push(catId);
-      }
-      renderCategoryCheckboxes();
-      updateSelectedPoolCount();
-    }
-
-    function selectAllCategories(status) {
-      if (status) {
-        selectedCategories = Object.keys(CATEGORIES);
-      } else {
-        selectedCategories = [];
-      }
-      renderCategoryCheckboxes();
-      updateSelectedPoolCount();
-    }
-
-    function updateSelectedPoolCount() {
-      const available = ALL_QUESTIONS.filter(q => selectedCategories.includes(q.category));
-      document.getElementById("selected-pool-count").innerText = available.length;
-    }
-
-    function startQuizSession() {
-      if (selectedCategories.length === 0) {
-        showTemporaryNotice("請至少勾選 1 個測驗領域題型！");
-        return;
-      }
-
-      // Filter available questions from pool
-      const filteredPool = ALL_QUESTIONS.filter(q => selectedCategories.includes(q.category));
-      if (filteredPool.length === 0) {
-        showTemporaryNotice("所選領域目前無可用題目，請勾選其他項目。");
-        return;
-      }
-
-      // Sample 25 questions randomly without replacement
-      const shuffled = shuffleArray(filteredPool);
-      currentQuizQueue = shuffled.slice(0, 25);
-      
-      // If pool was under 25, fill remainder from general pool
-      if (currentQuizQueue.length < 25) {
-        const remainder = shuffleArray(ALL_QUESTIONS.filter(q => !currentQuizQueue.includes(q)));
-        currentQuizQueue = currentQuizQueue.concat(remainder.slice(0, 25 - currentQuizQueue.length));
-      }
-
-      // Reset test state
-      currentQIndex = 0;
-      quizScore = 0;
-      mistakeLog = [];
-      
-      // Switch screen
-      document.getElementById("screen-home").classList.add("hidden");
-      document.getElementById("screen-report").classList.add("hidden");
-      document.getElementById("screen-quiz").classList.remove("hidden");
-
-      renderCurrentQuestion();
-    }
-
-    function renderCurrentQuestion() {
-      answeredCurrent = false;
-      const q = currentQuizQueue[currentQIndex];
-      const cat = CATEGORIES[q.category] || { name: "綜合測驗" };
-
-      // Update Top Badges & Progress
-      document.getElementById("quiz-category-badge").innerHTML = `<i class="ph-bold ph-tag"></i> ${cat.name}`;
-      document.getElementById("quiz-subtag-badge").innerText = q.subtag || "核心考點";
-      document.getElementById("current-q-num").innerText = (currentQIndex + 1);
-      document.getElementById("q-subtag").innerText = q.subtag || cat.name;
-      
-      const progressPercent = ((currentQIndex) / 25) * 100;
-      document.getElementById("quiz-progress-bar").style.width = `${progressPercent}%`;
-
-      // Update Stem
-      document.getElementById("q-stem").innerHTML = q.stem;
-
-      // Render Options
-      const optionsContainer = document.getElementById("q-options-container");
-      optionsContainer.innerHTML = "";
-
-      const optionLetters = ["A", "B", "C", "D"];
-      q.options.forEach((optText, idx) => {
-        const btn = document.createElement("button");
-        btn.className = "w-full p-4 rounded-2xl border-2 border-slate-200 bg-white hover:bg-indigo-50/50 hover:border-indigo-300 text-left font-semibold text-sm sm:text-base text-slate-800 transition flex items-center justify-between group";
-        btn.id = `opt-btn-${idx}`;
-        btn.onclick = () => selectOption(idx);
-        btn.innerHTML = `
-          <div class="flex items-center gap-3">
-            <span class="w-7 h-7 rounded-lg bg-slate-100 group-hover:bg-indigo-100 text-slate-600 group-hover:text-indigo-700 font-bold text-xs flex items-center justify-center transition">
-              ${optionLetters[idx]}
-            </span>
-            <span>${optText}</span>
-          </div>
-          <i class="ph-bold ph-arrow-right text-slate-300 group-hover:text-indigo-500 opacity-0 group-hover:opacity-100 transition"></i>
-        `;
-        optionsContainer.appendChild(btn);
-      });
-
-      // Reset Feedback and Next Button
-      const drawer = document.getElementById("q-feedback-drawer");
-      drawer.className = "hidden mt-6 p-4 sm:p-5 rounded-2xl border transition-all duration-200";
-      
-      const nextBtn = document.getElementById("q-next-btn");
-      nextBtn.classList.add("hidden");
-      document.getElementById("next-btn-text").innerText = (currentQIndex === 24) ? "查看成績與診斷報告" : "下一題";
-
-      // Auto pronunciation if enabled
-      if (audioEnabled && q.audioText) {
-        speakText(q.audioText);
-      }
-    }
-
-    function selectOption(selectedIdx) {
-      if (answeredCurrent) return;
-      answeredCurrent = true;
-
-      const q = currentQuizQueue[currentQIndex];
-      const isCorrect = (selectedIdx === q.correct);
-
-      // Disable all option buttons
-      const buttons = document.querySelectorAll("#q-options-container button");
-      buttons.forEach((btn, idx) => {
-        btn.disabled = true;
-        btn.classList.remove("hover:bg-indigo-50/50", "hover:border-indigo-300");
-        
-        if (idx === q.correct) {
-          btn.className = "w-full p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 text-emerald-900 font-bold text-sm sm:text-base flex items-center justify-between";
-          btn.querySelector("span").className = "w-7 h-7 rounded-lg bg-emerald-200 text-emerald-900 font-bold text-xs flex items-center justify-center";
-        } else if (idx === selectedIdx && !isCorrect) {
-          btn.className = "w-full p-4 rounded-2xl border-2 border-rose-500 bg-rose-50 text-rose-900 font-bold text-sm sm:text-base flex items-center justify-between shake-anim";
-          btn.querySelector("span").className = "w-7 h-7 rounded-lg bg-rose-200 text-rose-900 font-bold text-xs flex items-center justify-center";
-        } else {
-          btn.className = "w-full p-4 rounded-2xl border-2 border-slate-100 bg-slate-50 text-slate-400 font-medium text-sm sm:text-base flex items-center justify-between opacity-60";
-        }
-      });
-
-      // Show Feedback Drawer
-      const drawer = document.getElementById("q-feedback-drawer");
-      const iconWrap = document.getElementById("feedback-icon-wrapper");
-      const icon = document.getElementById("feedback-icon");
-      const verdict = document.getElementById("feedback-verdict");
-      const exp = document.getElementById("feedback-explanation");
-
-      drawer.classList.remove("hidden");
-
-      if (isCorrect) {
-        quizScore += 4; // 25 題 * 4分 = 100分
-        drawer.className = "mt-6 p-4 sm:p-5 rounded-2xl border border-emerald-200 bg-emerald-50/80 text-emerald-900";
-        iconWrap.className = "w-8 h-8 rounded-full bg-emerald-200 text-emerald-800 flex items-center justify-center shrink-0";
-        icon.className = "ph-bold ph-check text-lg";
-        verdict.innerText = "太棒了，答對了！";
-        exp.innerHTML = q.explain;
-      } else {
-        drawer.className = "mt-6 p-4 sm:p-5 rounded-2xl border border-rose-200 bg-rose-50/80 text-rose-900";
-        iconWrap.className = "w-8 h-8 rounded-full bg-rose-200 text-rose-800 flex items-center justify-center shrink-0";
-        icon.className = "ph-bold ph-x text-lg";
-        verdict.innerText = "答錯了！別氣餒，看懂解析就能進步：";
-        exp.innerHTML = `<strong>正確答案為：${q.options[q.correct]}</strong><br>${q.explain}`;
-
-        mistakeLog.push({
-          qIndex: currentQIndex + 1,
-          question: q,
-          userSelected: q.options[selectedIdx],
-          correctAnswer: q.options[q.correct]
-        });
-      }
-
-      document.getElementById("q-next-btn").classList.remove("hidden");
-    }
-
-    function goToNextQuestion() {
-      if (currentQIndex < 24) {
-        currentQIndex++;
-        renderCurrentQuestion();
-      } else {
-        showFinalReport();
-      }
-    }
-
-    function terminateQuizConfirm() {
-      if (window.confirm("確定要中止本次測驗返回領域選擇頁嗎？當前進度將不會被計算。")) {
-        returnToHome();
-      }
-    }
-
-    function showFinalReport() {
-      document.getElementById("screen-quiz").classList.add("hidden");
-      document.getElementById("screen-report").classList.remove("hidden");
-
-      const correctCount = Math.round(quizScore / 4);
-      const percentage = (correctCount / 25) * 100;
-
-      document.getElementById("report-score-num").innerText = quizScore;
-      document.getElementById("report-correct-count").innerText = correctCount;
-      document.getElementById("report-percent-text").innerText = `${percentage.toFixed(0)}%`;
-      document.getElementById("report-mistake-count").innerText = mistakeLog.length;
-
-      // Animate Radial Score Circle
-      const circlePath = document.getElementById("score-circle-path");
-      circlePath.setAttribute("stroke-dasharray", `${percentage}, 100`);
-      if (percentage >= 80) {
-        circlePath.setAttribute("class", "text-emerald-500 transition-all duration-1000 ease-out");
-      } else if (percentage >= 60) {
-        circlePath.setAttribute("class", "text-indigo-600 transition-all duration-1000 ease-out");
-      } else {
-        circlePath.setAttribute("class", "text-amber-500 transition-all duration-1000 ease-out");
-      }
-
-      // Objective Diagnostic Advice
-      const adviceEl = document.getElementById("report-diagnostic-advice");
-      let adviceContent = "";
-      if (quizScore >= 88) {
-        adviceContent = `<strong>表現極為優異！</strong> 您在本次 25 題抽測中展現了扎實的五年級英語語感與認讀能力。不論是易混淆的動作動詞還是否定結構都能清楚辨別！建議可以持續保持，並嘗試閱讀篇幅更長的英文繪本故事。`;
-      } else if (quizScore >= 64) {
-        adviceContent = `<strong>基礎良好，持續突破中！</strong> 您已大致掌握了基本單字與問答模式。對於「否定詞 (not / can't)」或是較長的對話句子，建議作答時放慢速度，把主詞與否定標記看清楚再作答。建議點擊下方「檢視本次錯題」複習後，再測一次！`;
-      } else {
-        adviceContent = `<strong>再接再厲，持之以恆就會進步！</strong> 本次測驗在「動作動詞認讀」或「否定句型」上有較多失誤。建議配合語音朗讀「以音帶字」記憶單字，並注意句子中的否定詞 <em>not / can't</em>。請仔細閱讀下方 ${mistakeLog.length} 道錯題的解析，隨後再抽 25 題鞏固記憶！`;
-      }
-      adviceEl.innerHTML = adviceContent;
-
-      renderCategoryStats();
-      renderMistakesList();
-    }
-
-    function renderCategoryStats() {
-      const statsMap = {};
-      currentQuizQueue.forEach(q => {
-        if (!statsMap[q.category]) {
-          statsMap[q.category] = { total: 0, correct: 0 };
-        }
-        statsMap[q.category].total++;
-      });
-
-      // Count correct
-      Object.keys(statsMap).forEach(cat => {
-        const catMistakes = mistakeLog.filter(x => x.question.category === cat).length;
-        statsMap[cat].correct = statsMap[cat].total - catMistakes;
-      });
-
-      const container = document.getElementById("report-category-breakdown");
-      container.innerHTML = "";
-
-      Object.keys(statsMap).forEach(catId => {
-        const item = statsMap[catId];
-        const catInfo = CATEGORIES[catId] || { name: catId };
-        const rate = Math.round((item.correct / item.total) * 100);
-        
-        const card = document.createElement("div");
-        card.className = "p-3.5 rounded-xl bg-white border border-slate-200 flex items-center justify-between text-xs";
-        card.innerHTML = `
-          <div>
-            <span class="font-bold text-slate-800">${catInfo.name}</span>
-            <div class="text-[11px] text-slate-400 mt-0.5">答對 ${item.correct} / ${item.total} 題</div>
-          </div>
-          <span class="font-extrabold px-2.5 py-1 rounded-md text-xs ${
-            rate >= 80 ? "bg-emerald-50 text-emerald-700 border border-emerald-200/60" : rate >= 50 ? "bg-indigo-50 text-indigo-700 border border-indigo-200/60" : "bg-rose-50 text-rose-700 border border-rose-200/60"
-          }">${rate}%</span>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    function renderMistakesList() {
-      const container = document.getElementById("mistake-items-list");
-      container.innerHTML = "";
-
-      if (mistakeLog.length === 0) {
-        container.innerHTML = `
-          <div class="text-center py-8 text-emerald-600">
-            <i class="ph-bold ph-check-circle text-4xl mb-2 inline-block"></i>
-            <p class="font-bold text-base">太棒了！本次 25 題完全零失誤！</p>
-          </div>
-        `;
-        return;
-      }
-
-      mistakeLog.forEach((m) => {
-        const card = document.createElement("div");
-        card.className = "p-4 rounded-2xl bg-rose-50/50 border border-rose-100 text-xs sm:text-sm space-y-2";
-        card.innerHTML = `
-          <div class="flex items-center justify-between">
-            <span class="font-bold text-rose-800">第 ${m.qIndex} 題 • ${m.question.subtag}</span>
-            <button onclick="speakText('${m.question.audioText || ""}')" class="text-indigo-600 hover:text-indigo-800 font-semibold flex items-center gap-1">
-              <i class="ph-bold ph-speaker-high"></i> 朗讀
-            </button>
-          </div>
-          <div class="text-slate-800 font-medium">${m.question.stem}</div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs pt-1">
-            <div class="p-2 rounded-lg bg-rose-100/70 text-rose-900">
-              <span class="font-bold">您的選擇：</span>${m.userSelected}
-            </div>
-            <div class="p-2 rounded-lg bg-emerald-100/70 text-emerald-900">
-              <span class="font-bold">正確解答：</span>${m.correctAnswer}
-            </div>
-          </div>
-          <p class="text-slate-600 text-xs bg-white/80 p-2.5 rounded-lg border border-rose-100/80 leading-relaxed">
-            <strong>核心解析：</strong>${m.question.explain}
-          </p>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    function toggleMistakeReview() {
-      const el = document.getElementById("mistake-review-container");
-      const isHidden = el.classList.contains("hidden");
-      if (isHidden) {
-        el.classList.remove("hidden");
-        document.getElementById("mistake-toggle-text").innerText = `收合錯題清單 (${mistakeLog.length})`;
-      } else {
-        el.classList.add("hidden");
-        document.getElementById("mistake-toggle-text").innerText = `檢視本次錯題 (${mistakeLog.length})`;
-      }
-    }
-
-    function restartTestWithSameSettings() {
-      startQuizSession();
-    }
-
-    function returnToHome() {
-      document.getElementById("screen-quiz").classList.add("hidden");
-      document.getElementById("screen-report").classList.add("hidden");
-      document.getElementById("screen-home").classList.remove("hidden");
-    }
-
-    function speakText(text) {
-      if (!audioEnabled || !text) return;
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const cleanText = text.replace(/<[^>]*>/g, '');
-        const utterance = new SpeechSynthesisUtterance(cleanText);
-        utterance.lang = 'en-US';
-        utterance.rate = 0.85;
-        window.speechSynthesis.speak(utterance);
-      }
-    }
-
-    function speakCurrentQuestion() {
-      const q = currentQuizQueue[currentQIndex];
-      if (q && q.audioText) {
-        speakText(q.audioText);
-      }
-    }
-
-    function toggleAudio() {
-      audioEnabled = !audioEnabled;
-      const icon = document.getElementById("audio-icon");
-      const text = document.getElementById("audio-status-text");
-      if (audioEnabled) {
-        icon.className = "ph-bold ph-speaker-high text-indigo-600 text-sm";
-        text.innerText = "發音開啟";
-      } else {
-        icon.className = "ph-bold ph-speaker-slash text-slate-400 text-sm";
-        text.innerText = "發音關閉";
-        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-      }
-    }
-
-    function showBankModal() {
-      document.getElementById("modal-bank").classList.remove("hidden");
-      filterBankDisplay();
-    }
-
-    function closeBankModal() {
-      document.getElementById("modal-bank").classList.add("hidden");
-    }
-
-    function populateBankModal() {
-      const select = document.getElementById("modal-filter-category");
-      select.innerHTML = '<option value="ALL">全部分類 (全部 320+ 題)</option>';
-      Object.values(CATEGORIES).forEach(c => {
-        const opt = document.createElement("option");
-        opt.value = c.id;
-        opt.innerText = `${c.name}`;
-        select.appendChild(opt);
-      });
-    }
-
-    function filterBankDisplay() {
-      const filter = document.getElementById("modal-filter-category").value;
-      const listContainer = document.getElementById("modal-questions-list");
-      listContainer.innerHTML = "";
-
-      const filtered = filter === "ALL" 
-        ? ALL_QUESTIONS 
-        : ALL_QUESTIONS.filter(q => q.category === filter);
-
-      document.getElementById("modal-showing-count").innerText = `顯示 ${filtered.length} 題 / 共 ${ALL_QUESTIONS.length} 題`;
-
-      filtered.slice(0, 60).forEach((q, idx) => {
-        const item = document.createElement("div");
-        item.className = "p-3.5 rounded-xl bg-white border border-slate-200 text-xs space-y-1.5 shadow-2xs";
-        item.innerHTML = `
-          <div class="flex items-center justify-between text-[11px]">
-            <span class="font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">${CATEGORIES[q.category]?.name || q.category} • ${q.subtag}</span>
-            <span class="text-slate-400">題號 #${idx + 1}</span>
-          </div>
-          <div class="font-semibold text-slate-800">${q.stem}</div>
-          <div class="text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded font-medium">
-            正解：${q.options[q.correct]}
-          </div>
-        `;
-        listContainer.appendChild(item);
-      });
-
-      if (filtered.length > 60) {
-        const notice = document.createElement("div");
-        notice.className = "text-center text-xs text-slate-400 py-2";
-        notice.innerText = `... 其餘 ${filtered.length - 60} 題已存於測驗抽樣池中，測驗時隨機抽出`;
-        listContainer.appendChild(notice);
-      }
-    }
-
-    function showTemporaryNotice(msg) {
-      const div = document.createElement("div");
-      div.className = "fixed bottom-5 left-1/2 -translate-x-1/2 z-50 bg-slate-800 text-white px-5 py-2.5 rounded-xl text-xs font-semibold shadow-xl flex items-center gap-2";
-      div.innerHTML = `<i class="ph-fill ph-info text-amber-400 text-base"></i> ${msg}`;
-      document.body.appendChild(div);
-      setTimeout(() => div.remove(), 2500);
-    }
-  </script>
-</body>
-</html>
+  <!-- 測驗進度 -->
+  <div class="progress-box" id="progressBox" style="display:none;">
+    <div class="progress-meta">
+      <span id="qCountText">第 1 / 25 題</span>
+      <span id="scoreText">即時答對：0 題</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+  </div>
+
+  <!-- 測驗卡片 -->
+  <div class="quiz-card" id="quizCard" style="display:none;">
+    <div class="tag-row">
+      <span class="tag" id="tag">領域標籤</span>
+      <button class="btn-speak" id="btnSpeak" onclick="speakCurrentQuestion()">🔊 朗讀題目</button>
+    </div>
+
+    <!-- 圖片展示插槽 -->
+    <div class="question-illustration" id="illustrationBox" style="display:none;">
+      <div id="svgContainer"></div>
+      <div class="illustration-caption" id="illustrationCaption"></div>
+    </div>
+
+    <div class="question-stem" id="stem">載入題目中...</div>
+    <div class="options" id="options"></div>
+    <div class="feedback-box" id="feedback"></div>
+    <button class="btn-next" id="btnNext" onclick="nextQuestion()">下一題 →</button>
+  </div>
+
+  <!-- 成績結算頁面 -->
+  <div class="result-card" id="result
