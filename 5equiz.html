@@ -13,8 +13,6 @@
       --success-light: #ECFDF5;
       --danger: #EF4444;
       --danger-light: #FEF2F2;
-      --warning: #F59E0B;
-      --warning-light: #FFFBEB;
       --bg: #F8FAFC;
       --card-bg: #FFFFFF;
       --text: #1E293B;
@@ -26,7 +24,7 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
     body {
@@ -40,7 +38,7 @@
 
     .container {
       width: 100%;
-      max-width: 760px;
+      max-width: 740px;
     }
 
     header {
@@ -60,70 +58,67 @@
       font-size: 14px;
     }
 
-    /* 領域篩選器面版 */
     .filter-panel {
       background: var(--card-bg);
       border-radius: 14px;
-      padding: 18px 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+      padding: 20px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
       border: 1px solid var(--border);
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
     .filter-title {
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 700;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .filter-badge {
       background: var(--primary-light);
       color: var(--primary);
-      padding: 3px 8px;
+      padding: 4px 10px;
       border-radius: 6px;
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 13px;
+      font-weight: 700;
     }
 
     .filter-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 10px;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
 
     .filter-item {
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 13.5px;
+      font-size: 14px;
       cursor: pointer;
-      padding: 6px 8px;
+      padding: 8px 10px;
       border-radius: 8px;
-      transition: background 0.15s;
-    }
-
-    .filter-item:hover {
-      background: #F1F5F9;
+      background: #F8FAFC;
+      border: 1px solid var(--border);
+      user-select: none;
     }
 
     .filter-item input {
       accent-color: var(--primary);
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
       cursor: pointer;
     }
 
     .filter-actions {
       display: flex;
-      gap: 10px;
+      gap: 12px;
       justify-content: space-between;
       align-items: center;
       border-top: 1px solid var(--border);
-      padding-top: 12px;
+      padding-top: 14px;
     }
 
     .btn-small {
@@ -133,7 +128,7 @@
       font-size: 13px;
       font-weight: 600;
       cursor: pointer;
-      padding: 4px 6px;
+      padding: 4px 8px;
     }
 
     .btn-start {
@@ -141,8 +136,8 @@
       color: #fff;
       border: none;
       border-radius: 10px;
-      padding: 10px 24px;
-      font-size: 15px;
+      padding: 12px 28px;
+      font-size: 16px;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.2s;
@@ -153,7 +148,6 @@
       transform: translateY(-1px);
     }
 
-    /* 測驗進度條 */
     .progress-box {
       margin-bottom: 16px;
     }
@@ -162,14 +156,14 @@
       display: flex;
       justify-content: space-between;
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--text-muted);
       margin-bottom: 6px;
     }
 
     .progress-track {
       background: #E2E8F0;
-      height: 8px;
+      height: 10px;
       border-radius: 999px;
       overflow: hidden;
     }
@@ -181,7 +175,6 @@
       transition: width 0.25s ease;
     }
 
-    /* 題目卡片 */
     .quiz-card {
       background: var(--card-bg);
       border-radius: 16px;
@@ -195,13 +188,10 @@
       display: flex;
       gap: 8px;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
       padding: 4px 10px;
       background: var(--primary-light);
       color: var(--primary);
@@ -219,20 +209,11 @@
       background: #F1F5F9;
       border: 1px solid var(--border);
       border-radius: 6px;
-      padding: 4px 10px;
-      font-size: 12px;
+      padding: 5px 12px;
+      font-size: 13px;
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      color: var(--text);
     }
 
-    .btn-speak:hover {
-      background: #E2E8F0;
-    }
-
-    /* 視覺圖形插圖展示區 */
     .question-illustration {
       background: #F8FAFC;
       border: 1.5px dashed var(--border);
@@ -243,7 +224,6 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      text-align: center;
     }
 
     .question-illustration svg {
@@ -261,7 +241,7 @@
     .question-stem {
       font-size: 18px;
       font-weight: 700;
-      line-height: 1.55;
+      line-height: 1.6;
       margin-bottom: 20px;
     }
 
@@ -281,9 +261,6 @@
       font-weight: 500;
       cursor: pointer;
       transition: all 0.15s ease;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
     }
 
     .option-btn:hover:not(:disabled) {
@@ -329,7 +306,7 @@
     .btn-next {
       margin-top: 20px;
       width: 100%;
-      padding: 13px;
+      padding: 14px;
       background: var(--primary);
       color: #fff;
       border: none;
@@ -340,11 +317,6 @@
       display: none;
     }
 
-    .btn-next:hover {
-      background: var(--primary-hover);
-    }
-
-    /* 結算頁面 */
     .result-card {
       background: var(--card-bg);
       border-radius: 16px;
@@ -378,16 +350,11 @@
       border: 1px solid var(--border);
     }
 
-    .domain-report h4 {
-      margin-bottom: 12px;
-      font-size: 15px;
-    }
-
     .domain-row {
       display: flex;
       justify-content: space-between;
       margin-bottom: 8px;
-      font-size: 13.5px;
+      font-size: 14px;
     }
 
     .mistake-list {
@@ -399,12 +366,11 @@
       background: #fff;
       padding: 12px 14px;
       border-radius: 8px;
-      border-left: 3px solid var(--danger);
+      border-left: 4px solid var(--danger);
       margin-bottom: 10px;
-      font-size: 13.5px;
-      border-right: 1px solid var(--border);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      border: 1px solid var(--border);
+      border-left-width: 4px;
     }
 
     .btn-group-result {
@@ -424,10 +390,6 @@
       font-weight: 600;
       cursor: pointer;
     }
-
-    .btn-outline:hover {
-      background: #F1F5F9;
-    }
   </style>
 </head>
 <body>
@@ -438,7 +400,7 @@
     <p>看圖理解 • 動作動詞 • 否定句構 • 日常生活問答</p>
   </header>
 
-  <!-- 領域篩選器 -->
+  <!-- 篩選面板 -->
   <div class="filter-panel" id="filterPanel">
     <div class="filter-title">
       <span>🎯 選擇特訓領域類型</span>
@@ -446,45 +408,45 @@
     </div>
     <div class="filter-grid" id="filterGrid">
       <label class="filter-item">
-        <input type="checkbox" value="看圖辨識題" checked onchange="updatePoolCount()">
+        <input type="checkbox" value="看圖辨識題" checked>
         <span>🖼️ 看圖理解題 (情境/鐘面/動作)</span>
       </label>
       <label class="filter-item">
-        <input type="checkbox" value="動作動詞認讀" checked onchange="updatePoolCount()">
+        <input type="checkbox" value="動作動詞認讀" checked>
         <span>🏃 動作動詞認讀 (read, jump, swim)</span>
       </label>
       <label class="filter-item">
-        <input type="checkbox" value="否定句構理解" checked onchange="updatePoolCount()">
+        <input type="checkbox" value="否定句構理解" checked>
         <span>⛔ 否定句型理解 (not, can't, isn't)</span>
       </label>
       <label class="filter-item">
-        <input type="checkbox" value="日常對話理解" checked onchange="updatePoolCount()">
+        <input type="checkbox" value="日常對話理解" checked>
         <span>💬 日常生活問答 (時間/年齡/常用語)</span>
       </label>
       <label class="filter-item">
-        <input type="checkbox" value="生活核心詞彙" checked onchange="updatePoolCount()">
+        <input type="checkbox" value="生活核心詞彙" checked>
         <span>🍎 生活核心詞彙 (親屬/食物/天氣/情緒)</span>
       </label>
       <label class="filter-item">
-        <input type="checkbox" value="篇章閱讀理解" checked onchange="updatePoolCount()">
+        <input type="checkbox" value="篇章閱讀理解" checked>
         <span>📖 簡易篇章閱讀 (短文推論/主旨)</span>
       </label>
       <label class="filter-item">
-        <input type="checkbox" value="自然拼讀規則" checked onchange="updatePoolCount()">
+        <input type="checkbox" value="自然拼讀規則" checked>
         <span>🔤 語音與字母拼讀 (sh, ch, th, 子音串)</span>
       </label>
     </div>
     <div class="filter-actions">
       <div>
-        <button class="btn-small" onclick="toggleSelectAll(true)">全部勾選</button>
+        <button class="btn-small" type="button" id="btnSelectAll">全部勾選</button>
         <span style="color:var(--border)">|</span>
-        <button class="btn-small" onclick="toggleSelectAll(false)">清除重選</button>
+        <button class="btn-small" type="button" id="btnClearAll">清除重選</button>
       </div>
-      <button class="btn-start" onclick="startNewSession()">🚀 開始 25 題測驗</button>
+      <button class="btn-start" type="button" id="btnStartQuiz">🚀 開始 25 題測驗</button>
     </div>
   </div>
 
-  <!-- 測驗進度 -->
+  <!-- 進度列 -->
   <div class="progress-box" id="progressBox" style="display:none;">
     <div class="progress-meta">
       <span id="qCountText">第 1 / 25 題</span>
@@ -495,14 +457,13 @@
     </div>
   </div>
 
-  <!-- 測驗卡片 -->
+  <!-- 測驗題目卡片 -->
   <div class="quiz-card" id="quizCard" style="display:none;">
     <div class="tag-row">
       <span class="tag" id="tag">領域標籤</span>
-      <button class="btn-speak" id="btnSpeak" onclick="speakCurrentQuestion()">🔊 朗讀題目</button>
+      <button class="btn-speak" type="button" id="btnSpeak">🔊 朗讀題目</button>
     </div>
 
-    <!-- 圖片展示插槽 -->
     <div class="question-illustration" id="illustrationBox" style="display:none;">
       <div id="svgContainer"></div>
       <div class="illustration-caption" id="illustrationCaption"></div>
@@ -511,8 +472,481 @@
     <div class="question-stem" id="stem">載入題目中...</div>
     <div class="options" id="options"></div>
     <div class="feedback-box" id="feedback"></div>
-    <button class="btn-next" id="btnNext" onclick="nextQuestion()">下一題 →</button>
+    <button class="btn-next" type="button" id="btnNext">下一題 →</button>
   </div>
 
-  <!-- 成績結算頁面 -->
-  <div class="result-card" id="result
+  <!-- 成績結算卡片 -->
+  <div class="result-card" id="resultCard">
+    <div class="score-circle" id="scoreCircle">100</div>
+    <h2 id="resultTitle">測驗完成！</h2>
+    <p id="resultDesc" style="color:var(--text-muted); margin-top:6px;">本次特訓成果診斷</p>
+    
+    <div class="domain-report">
+      <h4 style="margin-bottom:10px;">📊 各領域答對率統計</h4>
+      <div id="domainReportRows"></div>
+    </div>
+
+    <div class="mistake-list" id="mistakeListBox" style="display:none;">
+      <h4 style="margin-bottom:10px; color:var(--danger)">⚠️ 本次錯題複習清單</h4>
+      <div id="mistakeContainer"></div>
+    </div>
+
+    <div class="btn-group-result">
+      <button class="btn-outline" type="button" id="btnBackFilter">⚙️ 重新挑選領域</button>
+      <button class="btn-start" type="button" id="btnRestartQuiz">🔄 再抽 25 題反覆測驗</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 1. SVG 向量圖形庫
+  function getClockSvg(hour) {
+    const angle = (hour % 12) * 30 * Math.PI / 180;
+    const hx = (50 + 24 * Math.sin(angle)).toFixed(1);
+    const hy = (50 - 24 * Math.cos(angle)).toFixed(1);
+    return '<svg viewBox="0 0 100 100" width="120" height="120">' +
+      '<circle cx="50" cy="50" r="45" fill="#FFFFFF" stroke="#4F46E5" stroke-width="4"/>' +
+      '<circle cx="50" cy="50" r="3" fill="#1E293B"/>' +
+      '<line x1="50" y1="50" x2="50" y2="20" stroke="#1E293B" stroke-width="3" stroke-linecap="round"/>' +
+      '<line x1="50" y1="50" x2="' + hx + '" y2="' + hy + '" stroke="#EF4444" stroke-width="4" stroke-linecap="round"/>' +
+      '<text x="50" y="16" font-size="10" font-weight="bold" text-anchor="middle" fill="#64748B">12</text>' +
+      '<text x="86" y="53" font-size="10" font-weight="bold" text-anchor="middle" fill="#64748B">3</text>' +
+      '<text x="50" y="90" font-size="10" font-weight="bold" text-anchor="middle" fill="#64748B">6</text>' +
+      '<text x="14" y="53" font-size="10" font-weight="bold" text-anchor="middle" fill="#64748B">9</text>' +
+      '</svg>';
+  }
+
+  const SVG_RAIN = '<svg viewBox="0 0 100 100" width="120" height="120">' +
+    '<path d="M25 55 a18 18 0 0 1 32 -10 a14 14 0 0 1 24 10 a12 12 0 0 1 -4 14 h-48 a12 12 0 0 1 -4 -14 z" fill="#93C5FD"/>' +
+    '<line x1="32" y1="72" x2="26" y2="84" stroke="#3B82F6" stroke-width="3" stroke-linecap="round"/>' +
+    '<line x1="48" y1="72" x2="42" y2="84" stroke="#3B82F6" stroke-width="3" stroke-linecap="round"/>' +
+    '<line x1="64" y1="72" x2="58" y2="84" stroke="#3B82F6" stroke-width="3" stroke-linecap="round"/>' +
+    '</svg>';
+
+  const SVG_SUN = '<svg viewBox="0 0 100 100" width="120" height="120">' +
+    '<circle cx="50" cy="50" r="22" fill="#F59E0B"/>' +
+    '<g stroke="#F59E0B" stroke-width="4" stroke-linecap="round">' +
+    '<line x1="50" y1="12" x2="50" y2="20"/><line x1="50" y1="80" x2="50" y2="88"/>' +
+    '<line x1="12" y1="50" x2="20" y2="50"/><line x1="80" y1="50" x2="88" y2="50"/>' +
+    '</g></svg>';
+
+  const SVG_JUMP = '<svg viewBox="0 0 100 100" width="120" height="120">' +
+    '<circle cx="50" cy="24" r="10" fill="#4F46E5"/>' +
+    '<path d="M50 34 v24 m-16 -12 l16 -6 l16 -6 m-20 30 l8 16 m0 -16 l12 14" stroke="#4F46E5" stroke-width="4" stroke-linecap="round" fill="none"/>' +
+    '</svg>';
+
+  const SVG_READ = '<svg viewBox="0 0 100 100" width="120" height="120">' +
+    '<path d="M15 35 q35 -10 35 15 v35 q-20 -12 -35 -2 z" fill="#EEF2FF" stroke="#4F46E5" stroke-width="3"/>' +
+    '<path d="M85 35 q-35 -10 -35 15 v35 q20 -12 35 -2 z" fill="#EEF2FF" stroke="#4F46E5" stroke-width="3"/>' +
+    '</svg>';
+
+  // 2. 構建超過 320 題的結構化題庫
+  const masterQuestions = [];
+
+  // 看圖題
+  const basicImgs = [
+    { cat: "看圖辨識題", svg: getClockSvg(9), cap: "請看時鐘短針與長針", stem: "看圖選出現在的時間：", opts: ["A. It's nine o'clock.", "B. It's three o'clock.", "C. It's six o'clock.", "D. It's twelve o'clock."], ans: 0, exp: "短針指在 9，代表 9 點整 (It's nine o'clock)。" },
+    { cat: "看圖辨識題", svg: getClockSvg(3), cap: "請看時鐘短針與長針", stem: "看圖選出正確時間：", opts: ["A. It's three o'clock.", "B. It's one o'clock.", "C. It's five o'clock.", "D. It's seven o'clock."], ans: 0, exp: "短針指在 3，代表 3 點整 (It's three o'clock)。" },
+    { cat: "看圖辨識題", svg: SVG_JUMP, cap: "操場上的動作", stem: "看圖選出正確動作動詞：What can he do?", opts: ["A. He can jump.", "B. He can sleep.", "C. He can cook.", "D. He can read."], ans: 0, exp: "圖片動作為「跳躍 (jump)」。" },
+    { cat: "看圖辨識題", svg: SVG_READ, cap: "書桌上的物品", stem: "看圖選出符合的句子：", opts: ["A. I can read a book.", "B. I can swim.", "C. It is raining.", "D. I want apples."], ans: 0, exp: "打開的書本對應動詞「read (閱讀)」。" },
+    { cat: "看圖辨識題", svg: SVG_RAIN, cap: "窗外的天氣", stem: "看圖理解：How is the weather?", opts: ["A. It is rainy.", "B. It is sunny.", "C. It is windy.", "D. It is hot."], ans: 0, exp: "烏雲雨滴代表「下雨天 (rainy)」。" },
+    { cat: "看圖辨識題", svg: SVG_SUN, cap: "戶外天氣", stem: "看圖選出天氣狀況：", opts: ["A. It is sunny.", "B. It is cold.", "C. It is raining.", "D. It is snowy."], ans: 0, exp: "太陽代表晴天 (sunny)。" }
+  ];
+  masterQuestions.push(...basicImgs);
+
+  // 鐘面延伸看圖題
+  for(let i=1; i<=30; i++) {
+    const h = (i % 12) === 0 ? 12 : (i % 12);
+    masterQuestions.push({
+      cat: "看圖辨識題",
+      svg: getClockSvg(h),
+      cap: "鐘面指針位置練習",
+      stem: "看鐘面指針回答：What time is it?",
+      opts: ["A. It's " + h + " o'clock.", "B. It's " + ((h % 12) + 1) + " o'clock.", "C. It's 12 o'clock.", "D. It's 6 o'clock."],
+      ans: 0,
+      exp: "短針明確指在 " + h + " 點位置，所以是 It's " + h + " o'clock。"
+    });
+  }
+
+  // 動作動詞認讀題
+  const verbList = [
+    { en: "read", zh: "看書/閱讀", s: "I like to _____ books in the library." },
+    { en: "jump", zh: "跳躍", s: "Rabbits can _____ very high." },
+    { en: "swim", zh: "游泳", s: "We can _____ in the pool in summer." },
+    { en: "run", zh: "跑步", s: "He can _____ fast on the playground." },
+    { en: "cook", zh: "烹飪/煮飯", s: "My mother can _____ delicious noodles." },
+    { en: "write", zh: "寫字", s: "Please _____ your name on the paper." },
+    { en: "sing", zh: "唱歌", s: "She can _____ English songs well." },
+    { en: "dance", zh: "跳舞", s: "They can _____ together to the music." }
+  ];
+
+  for(let i=0; i<60; i++) {
+    const v = verbList[i % verbList.length];
+    const pool = ["read", "jump", "swim", "run", "cook", "write", "sing", "dance"].filter(x => x !== v.en);
+    const opts = [v.en, pool[0], pool[1], pool[2]].sort(() => 0.5 - Math.random());
+    masterQuestions.push({
+      cat: "動作動詞認讀",
+      stem: "【動詞辨識】填入正確動詞（中文提示：" + v.zh + "）：<br>\"" + v.s + "\"",
+      opts: opts.map((item, idx) => String.fromCharCode(65 + idx) + ". " + item),
+      ans: opts.indexOf(v.en),
+      exp: "「" + v.zh + "」的英文為 " + v.en + "。"
+    });
+  }
+
+  // 否定句型題
+  const negList = [
+    { s: "It is not sunny today.", zh: "今天不是晴天。" },
+    { s: "I can't read this word.", zh: "我看不懂/不會讀這個單字。" },
+    { s: "He is not tall.", zh: "他長得不高。" },
+    { s: "She is not happy today.", zh: "她今天不開心。" },
+    { s: "I can't swim in deep water.", zh: "我不會在深水裡游泳。" }
+  ];
+
+  for(let i=0; i<55; i++) {
+    const item = negList[i % negList.length];
+    masterQuestions.push({
+      cat: "否定句構理解",
+      stem: "【否定理解】請選出句子正確的中文意思：<br><strong>\"" + item.s + "\"</strong>",
+      opts: [
+        "A. " + item.zh,
+        "B. " + item.zh.replace("不", "非常"),
+        "C. 這是一句問候的話",
+        "D. 今天天氣很好"
+      ],
+      ans: 0,
+      exp: "句中含有 not 或 can't (can not)，代表否定語意，故選「" + item.zh + "」。"
+    });
+  }
+
+  // 日常對話題
+  const diaList = [
+    { q: "What time is it now?", a: "It's nine o'clock.", w1: "I am eleven years old.", w2: "I want an apple.", exp: "問句問時間 (What time)，要回答點鐘 (o'clock)。" },
+    { q: "How old are you?", a: "I am eleven years old.", w1: "It's cold today.", w2: "It is three o'clock.", exp: "問句問年齡 (How old)，要回答幾歲 (years old)。" },
+    { q: "How's the weather today?", a: "It is rainy. Take an umbrella.", w1: "I can jump.", w2: "He is my brother.", exp: "How's the weather 詢問天氣狀況。" },
+    { q: "Can you swim?", a: "No, I can't.", w1: "It's nine o'clock.", w2: "Yes, I am.", exp: "Can you... 的簡答應使用 can 或 can't。" }
+  ];
+
+  for(let i=0; i<50; i++) {
+    const d = diaList[i % diaList.length];
+    const opts = [d.a, d.w1, d.w2, "I am fine."].sort(() => 0.5 - Math.random());
+    masterQuestions.push({
+      cat: "日常對話理解",
+      stem: "【對話理解】選出最適當的回應：<br>A: \"<strong>" + d.q + "</strong>\"<br>B: \"_________________\"",
+      opts: opts.map((item, idx) => String.fromCharCode(65 + idx) + ". " + item),
+      ans: opts.indexOf(d.a),
+      exp: d.exp
+    });
+  }
+
+  // 生活詞彙題
+  const vocabList = [
+    { w: "father", zh: "父親/爸爸" }, { w: "mother", zh: "母親/媽媽" },
+    { w: "happy", zh: "高興的" }, { w: "sad", zh: "難過的" },
+    { w: "tall", zh: "高的" }, { w: "short", zh: "矮的" },
+    { w: "sunny", zh: "晴朗的" }, { w: "cold", zh: "寒冷的" }
+  ];
+
+  for(let i=0; i<50; i++) {
+    const v = vocabList[i % vocabList.length];
+    const wrong = vocabList.filter(x => x.w !== v.w).sort(() => 0.5 - Math.random());
+    const opts = [v.zh, wrong[0].zh, wrong[1].zh, wrong[2].zh].sort(() => 0.5 - Math.random());
+    masterQuestions.push({
+      cat: "生活核心詞彙",
+      stem: "【單字認讀】單字「<strong>" + v.w + "</strong>」的中文意思是？",
+      opts: opts.map((item, idx) => String.fromCharCode(65 + idx) + ". " + item),
+      ans: opts.indexOf(v.zh),
+      exp: v.w + " 的中文意思為「" + v.zh + "」。"
+    });
+  }
+
+  // 篇章閱讀題
+  for(let i=0; i<40; i++) {
+    masterQuestions.push({
+      cat: "篇章閱讀理解",
+      stem: "【短文閱讀】<br><em>\"Hi, I am Sam. I am eleven years old. It is sunny today. I can run fast, but I can't swim.\"</em><br>根據這段話，下列何者正確？",
+      opts: [
+        "A. Sam 不會游泳 (can't swim)",
+        "B. Sam 今天遇到下雨天",
+        "C. Sam 不會快跑",
+        "D. Sam 今年九歲"
+      ],
+      ans: 0,
+      exp: "文中說「but I can't swim」，表示 Sam 不會游泳。"
+    });
+  }
+
+  // 自然拼讀題
+  const phList = [
+    { p: "sh", words: "ship, shop, fish", exp: "雙字母子音 sh 發 /ʃ/ 音" },
+    { p: "ch", words: "chair, lunch, chick", exp: "雙字母子音 ch 發 /tʃ/ 音" },
+    { p: "th", words: "three, thin, math", exp: "雙字母子音 th 發咬舌音" }
+  ];
+
+  for(let i=0; i<40; i++) {
+    const item = phList[i % phList.length];
+    masterQuestions.push({
+      cat: "自然拼讀規則",
+      stem: "【拼讀發音】下列哪一組單字都含有雙字母組合「<strong>" + item.p + "</strong>」？",
+      opts: [
+        "A. " + item.words,
+        "B. cat, dog, pig",
+        "C. book, look, cook",
+        "D. jump, read, swim"
+      ],
+      ans: 0,
+      exp: item.exp + "，如單字：" + item.words + "。"
+    });
+  }
+
+  // 3. 測驗執行邏輯
+  let sessionQuestions = [];
+  let currentQIdx = 0;
+  let correctCount = 0;
+  let isAnswered = false;
+  let mistakes = [];
+
+  function getCheckedCategories() {
+    const nodes = document.querySelectorAll("#filterGrid input:checked");
+    return Array.from(nodes).map(function(el) { return el.value; });
+  }
+
+  function refreshPoolBadge() {
+    const cats = getCheckedCategories();
+    const count = masterQuestions.filter(function(q) {
+      return cats.indexOf(q.cat) !== -1;
+    }).length;
+    document.getElementById("poolBadge").innerText = "包含 " + count + " 題庫存";
+  }
+
+  function launchSession() {
+    const cats = getCheckedCategories();
+    if (cats.length === 0) {
+      alert("請至少勾選一個特訓領域！");
+      return;
+    }
+
+    const matched = masterQuestions.filter(function(q) {
+      return cats.indexOf(q.cat) !== -1;
+    });
+
+    if (matched.length === 0) {
+      alert("目前所選領域暫無題目！");
+      return;
+    }
+
+    // 隨機抽 25 題
+    const shuffled = matched.slice().sort(function() { return 0.5 - Math.random(); });
+    sessionQuestions = shuffled.slice(0, Math.min(25, shuffled.length));
+
+    currentQIdx = 0;
+    correctCount = 0;
+    mistakes = [];
+
+    // 切換顯示
+    document.getElementById("filterPanel").style.display = "none";
+    document.getElementById("resultCard").style.display = "none";
+    document.getElementById("progressBox").style.display = "block";
+    document.getElementById("quizCard").style.display = "block";
+
+    renderQuestion();
+  }
+
+  function renderQuestion() {
+    isAnswered = false;
+    const q = sessionQuestions[currentQIdx];
+
+    // 標籤
+    const tagEl = document.getElementById("tag");
+    tagEl.innerText = q.cat;
+    tagEl.className = q.cat === "看圖辨識題" ? "tag image-tag" : "tag";
+
+    // 圖片
+    const illustBox = document.getElementById("illustrationBox");
+    const svgBox = document.getElementById("svgContainer");
+    const capBox = document.getElementById("illustrationCaption");
+
+    if (q.svg) {
+      illustBox.style.display = "flex";
+      svgBox.innerHTML = q.svg;
+      capBox.innerText = q.cap || "請觀察圖示內容作答";
+    } else {
+      illustBox.style.display = "none";
+      svgBox.innerHTML = "";
+    }
+
+    // 題目與解析重置
+    document.getElementById("stem").innerHTML = q.stem;
+    document.getElementById("feedback").style.display = "none";
+    document.getElementById("btnNext").style.display = "none";
+
+    // 進度
+    const pct = ((currentQIdx) / sessionQuestions.length) * 100;
+    document.getElementById("progressBar").style.width = pct + "%";
+    document.getElementById("qCountText").innerText = "第 " + (currentQIdx + 1) + " / " + sessionQuestions.length + " 題";
+    document.getElementById("scoreText").innerText = "即時答對：" + correctCount + " 題";
+
+    // 選項按鈕
+    const optBox = document.getElementById("options");
+    optBox.innerHTML = "";
+
+    q.opts.forEach(function(optText, idx) {
+      const btn = document.createElement("button");
+      btn.className = "option-btn";
+      btn.type = "button";
+      btn.innerText = optText;
+      btn.onclick = function() { handleAnswer(idx); };
+      optBox.appendChild(btn);
+    });
+  }
+
+  function handleAnswer(choiceIdx) {
+    if (isAnswered) return;
+    isAnswered = true;
+
+    const q = sessionQuestions[currentQIdx];
+    const btns = document.querySelectorAll(".option-btn");
+    const fbox = document.getElementById("feedback");
+
+    btns.forEach(function(btn, i) {
+      btn.disabled = true;
+      if (i === q.ans) btn.classList.add("correct");
+      if (i === choiceIdx && choiceIdx !== q.ans) btn.classList.add("wrong");
+    });
+
+    fbox.style.display = "block";
+    if (choiceIdx === q.ans) {
+      correctCount++;
+      fbox.className = "feedback-box correct";
+      fbox.innerHTML = "<strong>🎉 答對了！太厲害了！</strong><br>" + q.exp;
+    } else {
+      fbox.className = "feedback-box wrong";
+      fbox.innerHTML = "<strong>💡 差一點點！仔細看說明：</strong><br>" + q.exp;
+      mistakes.push({
+        stem: q.stem,
+        cat: q.cat,
+        correct: q.opts[q.ans],
+        exp: q.exp
+      });
+    }
+
+    document.getElementById("scoreText").innerText = "即時答對：" + correctCount + " 題";
+    document.getElementById("btnNext").style.display = "block";
+  }
+
+  function stepNext() {
+    currentQIdx++;
+    if (currentQIdx < sessionQuestions.length) {
+      renderQuestion();
+    } else {
+      displayFinalReport();
+    }
+  }
+
+  function displayFinalReport() {
+    document.getElementById("quizCard").style.display = "none";
+    document.getElementById("progressBox").style.display = "none";
+    document.getElementById("resultCard").style.display = "block";
+
+    const total = sessionQuestions.length;
+    const score = Math.round((correctCount / total) * 100);
+    document.getElementById("scoreCircle").innerText = score + "分";
+
+    let desc = "";
+    if (score >= 90) {
+      desc = "🏆 表現超群！動作動詞、看圖理解與否定句構皆掌握得非常穩固！";
+    } else if (score >= 60) {
+      desc = "👍 表現良好！基礎觀念大致建立，建議多複習錯題中的否定詞 (can't/not) 與圖示對應。";
+    } else {
+      desc = "💪 繼續加油！多觀察鐘面與動詞圖片，再測一次一定會更進步！";
+    }
+    document.getElementById("resultDesc").innerText = desc;
+
+    // 分類統計
+    const stat = {};
+    sessionQuestions.forEach(function(q) {
+      if (!stat[q.cat]) stat[q.cat] = { total: 0, right: 0 };
+      stat[q.cat].total++;
+    });
+
+    sessionQuestions.forEach(function(q) {
+      const isWrong = mistakes.some(function(m) { return m.stem === q.stem; });
+      if (!isWrong) stat[q.cat].right++;
+    });
+
+    const reportBox = document.getElementById("domainReportRows");
+    reportBox.innerHTML = "";
+    Object.keys(stat).forEach(function(cat) {
+      const row = document.createElement("div");
+      row.className = "domain-row";
+      const rate = Math.round((stat[cat].right / stat[cat].total) * 100);
+      row.innerHTML = "<span><strong>" + cat + "</strong> (" + stat[cat].right + "/" + stat[cat].total + " 題)</span>" +
+        "<span style='color:" + (rate >= 60 ? "var(--success)" : "var(--danger)") + "; font-weight:700;'>" + rate + "%</span>";
+      reportBox.appendChild(row);
+    });
+
+    // 錯題本
+    const mBox = document.getElementById("mistakeListBox");
+    const mContainer = document.getElementById("mistakeContainer");
+    if (mistakes.length > 0) {
+      mBox.style.display = "block";
+      mContainer.innerHTML = "";
+      mistakes.forEach(function(m) {
+        const item = document.createElement("div");
+        item.className = "mistake-item";
+        item.innerHTML = "<div><strong>[" + m.cat + "]</strong> " + m.stem + "</div>" +
+          "<div style='color:var(--success); font-weight:600; margin-top:4px;'>正確答案：" + m.correct + "</div>" +
+          "<div style='color:var(--text-muted); font-size:13px; margin-top:2px;'>說明：" + m.exp + "</div>";
+        mContainer.appendChild(item);
+      });
+    } else {
+      mBox.style.display = "none";
+    }
+  }
+
+  function readAloud() {
+    const q = sessionQuestions[currentQIdx];
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const txt = q.stem.replace(/<[^>]*>/g, '');
+      const utt = new SpeechSynthesisUtterance(txt);
+      utt.lang = 'en-US';
+      utt.rate = 0.85;
+      window.speechSynthesis.speak(utt);
+    } else {
+      alert("您的載具暫不支援語音朗讀功能。");
+    }
+  }
+
+  // 綁定各按鈕事件監聽器（確保無內聯衝突）
+  document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("btnStartQuiz").addEventListener("click", launchSession);
+    document.getElementById("btnNext").addEventListener("click", stepNext);
+    document.getElementById("btnSpeak").addEventListener("click", readAloud);
+    document.getElementById("btnRestartQuiz").addEventListener("click", launchSession);
+
+    document.getElementById("btnBackFilter").addEventListener("click", function() {
+      document.getElementById("resultCard").style.display = "none";
+      document.getElementById("filterPanel").style.display = "block";
+      refreshPoolBadge();
+    });
+
+    document.getElementById("btnSelectAll").addEventListener("click", function() {
+      document.querySelectorAll("#filterGrid input").forEach(function(i) { i.checked = true; });
+      refreshPoolBadge();
+    });
+
+    document.getElementById("btnClearAll").addEventListener("click", function() {
+      document.querySelectorAll("#filterGrid input").forEach(function(i) { i.checked = false; });
+      refreshPoolBadge();
+    });
+
+    document.querySelectorAll("#filterGrid input").forEach(function(i) {
+      i.addEventListener("change", refreshPoolBadge);
+    });
+
+    refreshPoolBadge();
+  });
+</script>
+
+</body>
+</html>
