@@ -2,20 +2,402 @@
   {
     "cat": "單字拼字與填空",
     "isSpellingTiles": true,
-    "word": "apple",
-    "stem": "【互動方塊拼字】請依序點選下方字母，拼出單字「<strong>蘋果</strong>」：",
-    "exp": "正確拼法為 apple。"
+    "word": "read",
+    "stem": "【互動方塊拼字】請依序點選下方字母，拼出單字「<strong>閱讀/看書</strong>」：",
+    "exp": "正確拼法為 read（r - e - a - d）。"
   },
   {
-    "cat": "考古題精選",
-    "stem": "【112學年度考古題】選出正確的問答：<br>A: \"What time is it?\"<br>B: \"________\"",
-    "opts": [
-      "A. It's ten o'clock.",
-      "B. I am eleven.",
-      "C. It is rainy.",
-      "D. I want milk."
-    ],
+    "cat": "單字拼字與填空",
+    "isSpellingTiles": true,
+    "word": "jump",
+    "stem": "【互動方塊拼字】請依序點選下方字母，拼出單字「<strong>跳躍</strong>」：",
+    "exp": "正確拼法為 jump（j - u - m - p）。"
+  },
+  {
+    "cat": "單字拼字與填空",
+    "isSpellingTiles": true,
+    "word": "swim",
+    "stem": "【互動方塊拼字】請依序點選下方字母，拼出單字「<strong>游泳</strong>」：",
+    "exp": "正確拼法為 swim（s - w - i - m）。"
+  },
+  {
+    "cat": "單字拼字與填空",
+    "isSpellingTiles": true,
+    "word": "cook",
+    "stem": "【互動方塊拼字】請依序點選下方字母，拼出單字「<strong>煮飯/烹飪</strong>」：",
+    "exp": "正確拼法為 cook（c - o - o - k）。"
+  },
+  {
+    "cat": "單字拼字與填空",
+    "isSpellingTiles": true,
+    "word": "sing",
+    "stem": "【互動方塊拼字】請依序點選下方字母，拼出單字「<strong>唱歌</strong>」：",
+    "exp": "正確拼法為 sing（s - i - n - g）。"
+  },
+  {
+    "cat": "單字拼字與填空",
+    "isSpellingTiles": true,
+    "word": "tall",
+    "stem": "【互動方塊拼字】請依序點選下方字母，拼出單字「<strong>高的</strong>」：",
+    "exp": "正確拼法為 tall（t - a - l - l）。"
+  },
+  {
+    "cat": "單字拼字與填空",
+    "isSpellingTiles": true,
+    "word": "cold",
+    "stem": "【互動方塊拼字】請依序點選下方字母，拼出單字「<strong>寒冷的</strong>」：",
+    "exp": "正確拼法為 cold（c - o - l - d）。"
+  },
+  {
+    "cat": "單字拼字與填空",
+    "isSpellingTiles": true,
+    "word": "rain",
+    "stem": "【互動方塊拼字】請依序點選下方字母，拼出單字「<strong>下雨/雨水</strong>」：",
+    "exp": "正確拼法為 rain（r - a - i - n）。"
+  },
+  {
+    "cat": "單字拼字與填空",
+    "isSpellingTiles": true,
+    "word": "nine",
+    "stem": "【互動方塊拼字】請依序點選下方字母，拼出單字「<strong>九</strong>」：",
+    "exp": "正確拼法為 nine（n - i - n - e）。"
+  },
+  {
+    "cat": "單字拼字與填空",
+    "isSpellingTiles": true,
+    "word": "book",
+    "stem": "【互動方塊拼字】請依序點選下方字母，拼出單字「<strong>書本</strong>」：",
+    "exp": "正確拼法為 book（b - o - o - k）。"
+  },
+  {
+    "cat": "單字拼字與填空",
+    "isSpellingTiles": false,
+    "stem": "【缺空填字母】請填入缺空的母音字母組合完成「閱讀」：r _ _ d",
+    "opts": ["A. ea", "B. oo", "C. ai", "D. ou"],
     "ans": 0,
-    "exp": "詢問時間 What time is it 應回答點鐘 It's ten o'clock。"
+    "exp": "read 中的長母音為 ea。"
+  },
+  {
+    "cat": "單字拼字與填空",
+    "isSpellingTiles": false,
+    "stem": "【缺空填字母】請填入缺空的母音字母組合完成「烹飪」：c _ _ k",
+    "opts": ["A. oo", "B. ea", "C. ee", "D. ai"],
+    "ans": 0,
+    "exp": "cook 中的母音發音為 oo。"
+  },
+  {
+    "cat": "看圖辨識題",
+    "stem": "【看時鐘】短針指向 9，長針指向 12。請問現在幾點？",
+    "opts": ["A. It's nine o'clock.", "B. It's three o'clock.", "C. It's six o'clock.", "D. It's twelve o'clock."],
+    "ans": 0,
+    "exp": "短針指在 9 代表 9 點整 (It's nine o'clock)。"
+  },
+  {
+    "cat": "看圖辨識題",
+    "stem": "【看時鐘】短針指向 3，長針指向 12。請問現在幾點？",
+    "opts": ["A. It's three o'clock.", "B. It's ten o'clock.", "C. It's one o'clock.", "D. It's five o'clock."],
+    "ans": 0,
+    "exp": "短針指在 3 代表 3 點整 (It's three o'clock)。"
+  },
+  {
+    "cat": "看圖辨識題",
+    "stem": "【看時鐘】短針指向 1，長針指向 12。選出正確句子：",
+    "opts": ["A. It's one o'clock.", "B. It's two o'clock.", "C. It's eleven o'clock.", "D. It's four o'clock."],
+    "ans": 0,
+    "exp": "短針指在 1 代表 1 點整 (It's one o'clock)。"
+  },
+  {
+    "cat": "看圖辨識題",
+    "stem": "【看時鐘】短針指向 5，長針指向 12。選出正確句子：",
+    "opts": ["A. It's five o'clock.", "B. It's eight o'clock.", "C. It's six o'clock.", "D. It's nine o'clock."],
+    "ans": 0,
+    "exp": "短針指在 5 代表 5 點整 (It's five o'clock)。"
+  },
+  {
+    "cat": "看圖辨識題",
+    "stem": "【看時鐘】短針指向 7，長針指向 12。選出正確句子：",
+    "opts": ["A. It's seven o'clock.", "B. It's eleven o'clock.", "C. It's ten o'clock.", "D. It's two o'clock."],
+    "ans": 0,
+    "exp": "短針指在 7 代表 7 點整 (It's seven o'clock)。"
+  },
+  {
+    "cat": "看圖辨識題",
+    "stem": "【看時鐘】短針指向 10，長針指向 12。選出正確句子：",
+    "opts": ["A. It's ten o'clock.", "B. It's two o'clock.", "C. It's four o'clock.", "D. It's twelve o'clock."],
+    "ans": 0,
+    "exp": "短針指在 10 代表 10 點整 (It's ten o'clock)。"
+  },
+  {
+    "cat": "看圖辨識題",
+    "stem": "【看時鐘】短針指向 12，長針指向 12。選出正確句子：",
+    "opts": ["A. It's twelve o'clock.", "B. It's six o'clock.", "C. It's three o'clock.", "D. It's one o'clock."],
+    "ans": 0,
+    "exp": "長短針皆指在 12 代表 12 點整 (It's twelve o'clock)。"
+  },
+  {
+    "cat": "看圖辨識題",
+    "stem": "【情境動作】小男孩在操場雙腿往上躍起。選出正確句子：",
+    "opts": ["A. He can jump.", "B. He can sleep.", "C. He can cook.", "D. He can read."],
+    "ans": 0,
+    "exp": "躍起的動作是「跳躍 (jump)」。"
+  },
+  {
+    "cat": "看圖辨識題",
+    "stem": "【情境圖示】桌上有一本翻開的故事書。選出符合情境的句子：",
+    "opts": ["A. I can read a book.", "B. I can swim.", "C. It is raining.", "D. I want apples."],
+    "ans": 0,
+    "exp": "翻開的故事書對應動詞「read (閱讀)」。"
+  },
+  {
+    "cat": "看圖辨識題",
+    "stem": "【天氣情境】窗外烏雲密布且雨滴落下。請問天氣如何？",
+    "opts": ["A. It is rainy.", "B. It is sunny.", "C. It is hot.", "D. It is snowy."],
+    "ans": 0,
+    "exp": "雨滴代表下雨天 (rainy)。"
+  },
+  {
+    "cat": "看圖辨識題",
+    "stem": "【天氣情境】抬頭看見大太陽高掛天空。選出正確描述：",
+    "opts": ["A. It is sunny.", "B. It is cold.", "C. It is raining.", "D. It is snowy."],
+    "ans": 0,
+    "exp": "大太陽代表晴天 (sunny)。"
+  },
+  {
+    "cat": "看圖辨識題",
+    "stem": "【情境人物】籃球員比一般小朋友高出許多。選出正確形容詞：",
+    "opts": ["A. He is tall.", "B. He is short.", "C. He is sad.", "D. He is thin."],
+    "ans": 0,
+    "exp": "身形高大應描述為「tall (高的)」。"
+  },
+  {
+    "cat": "動作動詞認讀",
+    "stem": "填入正確動詞：I like to _____ books in the library. (中文提示：看書)",
+    "opts": ["A. read", "B. swim", "C. cook", "D. sleep"],
+    "ans": 0,
+    "exp": "看書的英文為 read。"
+  },
+  {
+    "cat": "動作動詞認讀",
+    "stem": "填入正確動詞：Rabbits can _____ very high. (中文提示：跳躍)",
+    "opts": ["A. jump", "B. eat", "C. write", "D. sing"],
+    "ans": 0,
+    "exp": "跳躍的英文為 jump。"
+  },
+  {
+    "cat": "動作動詞認讀",
+    "stem": "填入正確動詞：Fish can _____ in the water. (中文提示：游泳)",
+    "opts": ["A. swim", "B. run", "C. dance", "D. cook"],
+    "ans": 0,
+    "exp": "游泳的英文為 swim。"
+  },
+  {
+    "cat": "動作動詞認讀",
+    "stem": "填入正確動詞：He can _____ fast on the playground. (中文提示：跑步)",
+    "opts": ["A. run", "B. sleep", "C. read", "D. write"],
+    "ans": 0,
+    "exp": "跑步的英文為 run。"
+  },
+  {
+    "cat": "動作動詞認讀",
+    "stem": "填入正確動詞：My mother can _____ tasty noodles. (中文提示：煮飯/烹飪)",
+    "opts": ["A. cook", "B. jump", "C. swim", "D. sing"],
+    "ans": 0,
+    "exp": "烹飪、煮飯的英文為 cook。"
+  },
+  {
+    "cat": "動作動詞認讀",
+    "stem": "填入正確動詞：Please _____ your name on the paper. (中文提示：寫字)",
+    "opts": ["A. write", "B. read", "C. cook", "D. jump"],
+    "ans": 0,
+    "exp": "寫字的英文為 write。"
+  },
+  {
+    "cat": "動作動詞認讀",
+    "stem": "填入正確動詞：She can _____ English songs well. (中文提示：唱歌)",
+    "opts": ["A. sing", "B. run", "C. swim", "D. sleep"],
+    "ans": 0,
+    "exp": "唱歌的英文為 sing。"
+  },
+  {
+    "cat": "動作動詞認讀",
+    "stem": "填入正確動詞：They can _____ to the music. (中文提示：跳舞)",
+    "opts": ["A. dance", "B. read", "C. write", "D. cook"],
+    "ans": 0,
+    "exp": "跳舞的英文為 dance。"
+  },
+  {
+    "cat": "動作動詞認讀",
+    "stem": "選出正確的動詞組合：我會「看書」也會「跳躍」：",
+    "opts": ["A. read and jump", "B. cook and swim", "C. sing and write", "D. run and sleep"],
+    "ans": 0,
+    "exp": "看書是 read，跳躍是 jump。"
+  },
+  {
+    "cat": "否定句構理解",
+    "stem": "選出正確中文意思：「<strong>It is not sunny today.</strong>」",
+    "opts": ["A. 今天不是晴天。", "B. 今天很晴朗。", "C. 今天天氣很熱。", "D. 今天在下雪。"],
+    "ans": 0,
+    "exp": "not sunny 代表不是晴天。"
+  },
+  {
+    "cat": "否定句構理解",
+    "stem": "選出正確中文意思：「<strong>I can't read this book.</strong>」",
+    "opts": ["A. 我看不懂/不會讀這本書。", "B. 我很喜歡讀這本書。", "C. 我有很多本書。", "D. 這本書很好看。"],
+    "ans": 0,
+    "exp": "can't read 代表不會讀或看不懂。"
+  },
+  {
+    "cat": "否定句構理解",
+    "stem": "選出正確中文意思：「<strong>He is not tall.</strong>」",
+    "opts": ["A. 他不高。", "B. 他很高大。", "C. 他跑得很快。", "D. 他很開心。"],
+    "ans": 0,
+    "exp": "not tall 代表不高。"
+  },
+  {
+    "cat": "否定句構理解",
+    "stem": "選出正確中文意思：「<strong>She is not happy.</strong>」",
+    "opts": ["A. 她不開心/難過。", "B. 她非常快樂。", "C. 她很聰明。", "D. 她肚子餓了。"],
+    "ans": 0,
+    "exp": "not happy 代表不開心。"
+  },
+  {
+    "cat": "否定句構理解",
+    "stem": "選出正確中文意思：「<strong>They can't swim.</strong>」",
+    "opts": ["A. 他們不會游泳。", "B. 他們很會游泳。", "C. 他們去游泳池。", "D. 他們喜歡玩水。"],
+    "ans": 0,
+    "exp": "can't swim 代表不會游泳。"
+  },
+  {
+    "cat": "否定句構理解",
+    "stem": "想表達「今天不會冷」，正確英文是？",
+    "opts": ["A. It is not cold today.", "B. It is very cold.", "C. It can cold.", "D. Cold is not."],
+    "ans": 0,
+    "exp": "be動詞後方加上 not 表示否定：It is not cold today。"
+  },
+  {
+    "cat": "日常對話理解",
+    "stem": "選出最適當的回應：<br>A: \"<strong>What time is it now?</strong>\"<br>B: \"________\"",
+    "opts": ["A. It's nine o'clock.", "B. I am eleven years old.", "C. It is rainy.", "D. I want apples."],
+    "ans": 0,
+    "exp": "詢問時間 What time is it 應回答點鐘 It's nine o'clock。"
+  },
+  {
+    "cat": "日常對話理解",
+    "stem": "選出最適當的回應：<br>A: \"<strong>How old are you?</strong>\"<br>B: \"________\"",
+    "opts": ["A. I am eleven years old.", "B. It's three o'clock.", "C. I am fine, thank you.", "D. It is sunny."],
+    "ans": 0,
+    "exp": "詢問年齡 How old are you 應回答年齡幾歲 (years old)。"
+  },
+  {
+    "cat": "日常對話理解",
+    "stem": "選出最適當的回應：<br>A: \"<strong>How's the weather today?</strong>\"<br>B: \"________\"",
+    "opts": ["A. It is rainy. Take an umbrella.", "B. I can run fast.", "C. He is my brother.", "D. It's five o'clock."],
+    "ans": 0,
+    "exp": "How's the weather 詢問天氣狀況。"
+  },
+  {
+    "cat": "日常對話理解",
+    "stem": "選出最適當的回應：<br>A: \"<strong>Can you swim?</strong>\"<br>B: \"________\"",
+    "opts": ["A. No, I can't.", "B. It's nine o'clock.", "C. Yes, I am.", "D. I want three apples."],
+    "ans": 0,
+    "exp": "Can you... 問句應以 can 或 can't 回答。"
+  },
+  {
+    "cat": "日常對話理解",
+    "stem": "選出最適當的回應：<br>A: \"<strong>What do you want?</strong>\"<br>B: \"________\"",
+    "opts": ["A. I want three red apples.", "B. I am ten years old.", "C. It is twelve o'clock.", "D. He is tall."],
+    "ans": 0,
+    "exp": "What do you want 詢問想要什麼物品。"
+  },
+  {
+    "cat": "生活核心詞彙",
+    "stem": "單字「<strong>father</strong>」的中文意思是？",
+    "opts": ["A. 父親/爸爸", "B. 母親/媽媽", "C. 兄弟", "D. 姊妹"],
+    "ans": 0,
+    "exp": "father 是父親、爸爸。"
+  },
+  {
+    "cat": "生活核心詞彙",
+    "stem": "單字「<strong>mother</strong>」的中文意思是？",
+    "opts": ["A. 母親/媽媽", "B. 父親/爸爸", "C. 老師", "D. 學生"],
+    "ans": 0,
+    "exp": "mother 是母親、媽媽。"
+  },
+  {
+    "cat": "生活核心詞彙",
+    "stem": "單字「<strong>brother</strong>」的中文意思是？",
+    "opts": ["A. 兄弟/哥哥/弟弟", "B. 姊妹", "C. 爸爸", "D. 媽媽"],
+    "ans": 0,
+    "exp": "brother 是兄弟、哥哥、弟弟。"
+  },
+  {
+    "cat": "生活核心詞彙",
+    "stem": "單字「<strong>sister</strong>」的中文意思是？",
+    "opts": ["A. 姊妹/姊姊/妹妹", "B. 兄弟", "C. 朋友", "D. 老師"],
+    "ans": 0,
+    "exp": "sister 是姊妹、姊姊、妹妹。"
+  },
+  {
+    "cat": "生活核心詞彙",
+    "stem": "單字「<strong>happy</strong>」的中文意思是？",
+    "opts": ["A. 快樂的/高興的", "B. 傷心的", "C. 生氣的", "D. 疲倦的"],
+    "ans": 0,
+    "exp": "happy 是快樂的、高興的。"
+  },
+  {
+    "cat": "生活核心詞彙",
+    "stem": "單字「<strong>sad</strong>」的中文意思是？",
+    "opts": ["A. 傷心的/難過的", "B. 開心的", "C. 害怕的", "D. 飢餓的"],
+    "ans": 0,
+    "exp": "sad 是傷心的、難過的。"
+  },
+  {
+    "cat": "生活核心詞彙",
+    "stem": "單字「<strong>cold</strong>」的中文意思是？",
+    "opts": ["A. 寒冷的/冷的", "B. 炎熱的", "C. 溫暖的", "D. 涼爽的"],
+    "ans": 0,
+    "exp": "cold 是寒冷的、冷的。"
+  },
+  {
+    "cat": "篇章閱讀理解",
+    "stem": "【短文閱讀】<br><em>\"Hi, I am Sam. I am eleven years old. It is sunny today. I can run fast, but I can't swim.\"</em><br>根據這段話，下列何者正確？",
+    "opts": ["A. Sam 不會游泳 (can't swim)", "B. Sam 今天遇到下雨天", "C. Sam 不會跑步", "D. Sam 今年九歲"],
+    "ans": 0,
+    "exp": "文中明確說到「but I can't swim」，表示 Sam 不會游泳。"
+  },
+  {
+    "cat": "篇章閱讀理解",
+    "stem": "【短文閱讀】<br><em>\"Look at Kevin. He is tall and strong. He can jump high and play basketball, but he can't cook.\"</em><br>請問 Kevin 不會做什麼事？",
+    "opts": ["A. 烹飪/煮飯 (cook)", "B. 打籃球", "C. 跳躍", "D. 跑步"],
+    "ans": 0,
+    "exp": "文中說「but he can't cook」，代表他不會煮飯。"
+  },
+  {
+    "cat": "篇章閱讀理解",
+    "stem": "【短文閱讀】<br><em>\"It is nine o'clock in the morning. It is rainy outside. Mary is reading a book at home.\"</em><br>請問 Mary 現在正在做什麼？",
+    "opts": ["A. 在家看書 (reading a book)", "B. 在操場跑步", "C. 在泳池游泳", "D. 在廚房煮飯"],
+    "ans": 0,
+    "exp": "文中指出「Mary is reading a book at home」。"
+  },
+  {
+    "cat": "自然拼讀規則",
+    "stem": "下列哪一組單字的發音，都含有雙字母組合「<strong>sh</strong>」？",
+    "opts": ["A. ship, shop, fish", "B. cat, dog, pig", "C. book, look, cook", "D. jump, read, swim"],
+    "ans": 0,
+    "exp": "ship, shop, fish 皆含有 sh (/ʃ/) 發音。"
+  },
+  {
+    "cat": "自然拼讀規則",
+    "stem": "下列哪一組單字的發音，都含有雙字母組合「<strong>ch</strong>」？",
+    "opts": ["A. chair, chick, lunch", "B. thin, three, thank", "C. sheep, shoe, wash", "D. red, blue, green"],
+    "ans": 0,
+    "exp": "chair, chick, lunch 皆含有 ch (/tʃ/) 發音。"
+  },
+  {
+    "cat": "自然拼讀規則",
+    "stem": "下列哪一組單字的發音，都含有咬舌音組合「<strong>th</strong>」？",
+    "opts": ["A. three, thin, math", "B. ship, shop, shoe", "C. jump, juice, jam", "D. car, cat, cup"],
+    "ans": 0,
+    "exp": "three, thin, math 皆含有 th 咬舌發音。"
   }
 ]
