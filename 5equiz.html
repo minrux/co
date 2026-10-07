@@ -207,6 +207,12 @@
       padding: 5px 12px;
       font-size: 13px;
       cursor: pointer;
+      font-weight: 600;
+      transition: background 0.15s;
+    }
+
+    .btn-speak:hover {
+      background: #E2E8F0;
     }
 
     .question-illustration {
@@ -277,7 +283,6 @@
       font-weight: 700;
     }
 
-    /* 拼字特製區域 */
     .spelling-board {
       margin: 16px 0;
       padding: 18px;
@@ -493,7 +498,6 @@
     <p>看圖理解 • 單字拼字 • 動作動詞 • 否定句構</p>
   </header>
 
-  <!-- 固定的 8 大領域面板（不會隨意長出新分類） -->
   <div class="filter-panel" id="filterPanel">
     <div class="filter-title">
       <span>🎯 選擇特訓領域類型</span>
@@ -543,7 +547,6 @@
     </div>
   </div>
 
-  <!-- 進度列 -->
   <div class="progress-box" id="progressBox" style="display:none;">
     <div class="progress-meta">
       <span id="qCountText">第 1 / 25 題</span>
@@ -554,7 +557,6 @@
     </div>
   </div>
 
-  <!-- 測驗題目卡片 -->
   <div class="quiz-card" id="quizCard" style="display:none;">
     <div class="tag-row">
       <span class="tag" id="tag">領域標籤</span>
@@ -568,7 +570,6 @@
 
     <div class="question-stem" id="stem">載入題目中...</div>
 
-    <!-- 拼字專用字母槽區域 -->
     <div class="spelling-board" id="spellingBoard" style="display:none;">
       <div class="spell-slots" id="spellSlots"></div>
       <div class="letter-tiles" id="letterTiles"></div>
@@ -584,7 +585,6 @@
     <button class="btn-next" type="button" id="btnNext">下一題 →</button>
   </div>
 
-  <!-- 成績結算卡片 -->
   <div class="result-card" id="resultCard">
     <div class="score-circle" id="scoreCircle">100</div>
     <h2 id="resultTitle">測驗完成！</h2>
@@ -608,7 +608,6 @@
 </div>
 
 <script>
-  // 1. 向量 SVG 圖庫
   function getClockSvg(hour) {
     const angle = (hour % 12) * 30 * Math.PI / 180;
     const hx = (50 + 24 * Math.sin(angle)).toFixed(1);
@@ -633,7 +632,7 @@
     '</svg>';
 
   const SVG_SUN = '<svg viewBox="0 0 100 100" width="120" height="120">' +
-    '<circle cx="50" cy="50" r="22" fill="#F59E0B"/>' +
+    '<circle cx="50" cy="22" r="22" fill="#F59E0B"/>' +
     '<g stroke="#F59E0B" stroke-width="4" stroke-linecap="round">' +
     '<line x1="50" y1="12" x2="50" y2="20"/><line x1="50" y1="80" x2="50" y2="88"/>' +
     '<line x1="12" y1="50" x2="20" y2="50"/><line x1="80" y1="50" x2="88" y2="50"/>' +
@@ -649,7 +648,6 @@
     '<path d="M85 35 q-35 -10 -35 15 v35 q20 -12 35 -2 z" fill="#EEF2FF" stroke="#4F46E5" stroke-width="3"/>' +
     '</svg>';
 
-  // 2. 內建 350+ 題基本庫
   const masterQuestions = [];
 
   // 單字拼字與填空
@@ -669,8 +667,8 @@
   spellingWordBank.forEach(function(item) {
     masterQuestions.push({
       cat: "單字拼字與填空",
-      isSpellingTiles: true,
       word: item.w,
+      isSpellingTiles: true,
       stem: "【互動方塊拼字】請依序點選下方字母，拼出單字「<strong>" + item.zh + "</strong>」：",
       exp: "正確拼法為 <strong>" + item.w + "</strong>（" + item.hint + "）。"
     });
@@ -685,6 +683,7 @@
       const opts = [b.correct, distractors[0], distractors[1], distractors[2]].sort(() => 0.5 - Math.random());
       masterQuestions.push({
         cat: "單字拼字與填空",
+        word: item.w,
         isSpellingTiles: false,
         stem: "【拼字填空】" + b.stem,
         opts: opts.map((opt, oIdx) => String.fromCharCode(65 + oIdx) + ". " + opt),
@@ -696,18 +695,19 @@
 
   // 看圖題
   masterQuestions.push(
-    { cat: "看圖辨識題", svg: getClockSvg(9), cap: "看時鐘短針與長針", stem: "看圖選出現在的時間：", opts: ["A. It's nine o'clock.", "B. It's three o'clock.", "C. It's six o'clock.", "D. It's twelve o'clock."], ans: 0, exp: "短針指在 9，代表 9 點整 (It's nine o'clock)。" },
-    { cat: "看圖辨識題", svg: getClockSvg(3), cap: "看時鐘短針與長針", stem: "看圖選出正確時間：", opts: ["A. It's three o'clock.", "B. It's one o'clock.", "C. It's five o'clock.", "D. It's seven o'clock."], ans: 0, exp: "短針指在 3，代表 3 點整 (It's three o'clock)。" },
-    { cat: "看圖辨識題", svg: SVG_JUMP, cap: "操場上的動作", stem: "看圖選出正確動作：What can he do?", opts: ["A. He can jump.", "B. He can sleep.", "C. He can cook.", "D. He can read."], ans: 0, exp: "圖片動作為「跳躍 (jump)」。" },
-    { cat: "看圖辨識題", svg: SVG_READ, cap: "書桌上的物品", stem: "看圖選出符合的句子：", opts: ["A. I can read a book.", "B. I can swim.", "C. It is raining.", "D. I want apples."], ans: 0, exp: "打開的書本對應動詞「read (閱讀)」。" },
-    { cat: "看圖辨識題", svg: SVG_RAIN, cap: "窗外的天氣", stem: "看圖理解：How is the weather?", opts: ["A. It is rainy.", "B. It is sunny.", "C. It is windy.", "D. It is hot."], ans: 0, exp: "烏雲雨滴代表「下雨天 (rainy)」。" },
-    { cat: "看圖辨識題", svg: SVG_SUN, cap: "戶外天氣", stem: "看圖選出天氣狀況：", opts: ["A. It is sunny.", "B. It is cold.", "C. It is raining.", "D. It is snowy."], ans: 0, exp: "太陽代表晴天 (sunny)。" }
+    { cat: "看圖辨識題", word: "It's nine o'clock.", svg: getClockSvg(9), cap: "看時鐘短針與長針", stem: "看圖選出現在的時間：", opts: ["A. It's nine o'clock.", "B. It's three o'clock.", "C. It's six o'clock.", "D. It's twelve o'clock."], ans: 0, exp: "短針指在 9，代表 9 點整 (It's nine o'clock)。" },
+    { cat: "看圖辨識題", word: "It's three o'clock.", svg: getClockSvg(3), cap: "看時鐘短針與長針", stem: "看圖選出正確時間：", opts: ["A. It's three o'clock.", "B. It's one o'clock.", "C. It's five o'clock.", "D. It's seven o'clock."], ans: 0, exp: "短針指在 3，代表 3 點整 (It's three o'clock)。" },
+    { cat: "看圖辨識題", word: "What can he do?", svg: SVG_JUMP, cap: "操場上的動作", stem: "看圖選出正確動作：What can he do?", opts: ["A. He can jump.", "B. He can sleep.", "C. He can cook.", "D. He can read."], ans: 0, exp: "圖片動作為「跳躍 (jump)」。" },
+    { cat: "看圖辨識題", word: "I can read a book.", svg: SVG_READ, cap: "書桌上的物品", stem: "看圖選出符合的句子：", opts: ["A. I can read a book.", "B. I can swim.", "C. It is raining.", "D. I want apples."], ans: 0, exp: "打開的書本對應動詞「read (閱讀)」。" },
+    { cat: "看圖辨識題", word: "How is the weather?", svg: SVG_RAIN, cap: "窗外的天氣", stem: "看圖理解：How is the weather?", opts: ["A. It is rainy.", "B. It is sunny.", "C. It is windy.", "D. It is hot."], ans: 0, exp: "烏雲雨滴代表「下雨天 (rainy)」。" },
+    { cat: "看圖辨識題", word: "It is sunny.", svg: SVG_SUN, cap: "戶外天氣", stem: "看圖選出天氣狀況：", opts: ["A. It is sunny.", "B. It is cold.", "C. It is raining.", "D. It is snowy."], ans: 0, exp: "太陽代表晴天 (sunny)。" }
   );
 
   for(let i=1; i<=30; i++) {
     const h = (i % 12) === 0 ? 12 : (i % 12);
     masterQuestions.push({
       cat: "看圖辨識題",
+      word: "What time is it?",
       svg: getClockSvg(h),
       cap: "鐘面指針練習",
       stem: "看鐘面指針回答：What time is it?",
@@ -735,6 +735,7 @@
     const opts = [v.en, pool[0], pool[1], pool[2]].sort(() => 0.5 - Math.random());
     masterQuestions.push({
       cat: "動作動詞認讀",
+      word: v.en,
       stem: "【動詞辨識】填入正確動詞（中文提示：" + v.zh + "）：<br>\"" + v.s + "\"",
       opts: opts.map((item, idx) => String.fromCharCode(65 + idx) + ". " + item),
       ans: opts.indexOf(v.en),
@@ -755,6 +756,7 @@
     const item = negList[i % negList.length];
     masterQuestions.push({
       cat: "否定句構理解",
+      word: item.s,
       stem: "【否定理解】選出正確的中文意思：<br><strong>\"" + item.s + "\"</strong>",
       opts: ["A. " + item.zh, "B. " + item.zh.replace("不", "非常"), "C. 這是一句問候的話", "D. 今天天氣很好"],
       ans: 0,
@@ -775,6 +777,7 @@
     const opts = [d.a, d.w1, d.w2, "I am fine."].sort(() => 0.5 - Math.random());
     masterQuestions.push({
       cat: "日常對話理解",
+      word: d.q,
       stem: "【對話理解】選出最適當的回應：<br>A: \"<strong>" + d.q + "</strong>\"<br>B: \"_________________\"",
       opts: opts.map((item, idx) => String.fromCharCode(65 + idx) + ". " + item),
       ans: opts.indexOf(d.a),
@@ -796,6 +799,7 @@
     const opts = [v.zh, wrong[0].zh, wrong[1].zh, wrong[2].zh].sort(() => 0.5 - Math.random());
     masterQuestions.push({
       cat: "生活核心詞彙",
+      word: v.w,
       stem: "【單字認讀】單字「<strong>" + v.w + "</strong>」的中文意思是？",
       opts: opts.map((item, idx) => String.fromCharCode(65 + idx) + ". " + item),
       ans: opts.indexOf(v.zh),
@@ -807,6 +811,7 @@
   for(let i=0; i<40; i++) {
     masterQuestions.push({
       cat: "篇章閱讀理解",
+      word: "Hi, I am Sam. I am eleven years old. It is sunny today. I can run fast, but I can't swim.",
       stem: "【短文閱讀】<br><em>\"Hi, I am Sam. I am eleven years old. It is sunny today. I can run fast, but I can't swim.\"</em><br>根據這段話，下列何者正確？",
       opts: ["A. Sam 不會游泳 (can't swim)", "B. Sam 今天遇到下雨天", "C. Sam 不會快跑", "D. Sam 今年九歲"],
       ans: 0,
@@ -825,6 +830,7 @@
     const item = phList[i % phList.length];
     masterQuestions.push({
       cat: "自然拼讀規則",
+      word: item.words,
       stem: "【拼讀發音】下列哪一組單字都含有雙字母組合「<strong>" + item.p + "</strong>」？",
       opts: ["A. " + item.words, "B. cat, dog, pig", "C. book, look, cook", "D. jump, read, swim"],
       ans: 0,
@@ -832,14 +838,12 @@
     });
   }
 
-  // 自動無縫載入外部 questions.json 並合併到既有題庫
   async function loadExternalQuestions() {
     try {
       const res = await fetch('questions.json?t=' + Date.now());
       if (res.ok) {
         const extraQuestions = await res.json();
         if (Array.isArray(extraQuestions) && extraQuestions.length > 0) {
-          // 自動將外部新題目匯入合併，絕不新增額外分類
           masterQuestions.push(...extraQuestions);
           console.log("成功無縫匯入外部新題庫，共匯入: " + extraQuestions.length + " 題");
         }
@@ -850,7 +854,7 @@
     refreshPoolBadge();
   }
 
-  // 3. 測驗執行邏輯
+  // 測驗執行邏輯
   let sessionQuestions = [];
   let currentQIdx = 0;
   let correctCount = 0;
@@ -1153,16 +1157,62 @@
     }
   }
 
+  // 修正後的精準英文發音邏輯
   function readAloud() {
     const q = sessionQuestions[currentQIdx];
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-      const txt = q.isSpellingTiles ? q.word : q.stem.replace(/<[^>]*>/g, '');
-      const utt = new SpeechSynthesisUtterance(txt);
-      utt.lang = 'en-US';
-      utt.rate = 0.85;
-      window.speechSynthesis.speak(utt);
+    if (!('speechSynthesis' in window)) {
+      alert("您的瀏覽器暫不支援語音朗讀功能！");
+      return;
     }
+
+    window.speechSynthesis.cancel();
+
+    let textToRead = "";
+
+    // 1. 若題目有明確指定的單字或核心句子
+    if (q.word) {
+      textToRead = q.word;
+    } 
+    // 2. 若題幹中有雙引號包覆的英文內容（如填空句或對話）
+    else {
+      const quoteMatch = q.stem.match(/"([^"]+)"/);
+      if (quoteMatch && quoteMatch[1]) {
+        // 將底線填空替換為 blank，避免被唸成連續符號
+        textToRead = quoteMatch[1].replace(/_+/g, 'blank');
+      } else {
+        // 3. 抽取題幹內的英文字彙（過濾 HTML 標籤與中文字）
+        const cleanStem = q.stem.replace(/<[^>]*>/g, '');
+        const englishMatches = cleanStem.match(/[a-zA-Z\s',.?!\-]+/g);
+        if (englishMatches) {
+          textToRead = englishMatches
+            .map(s => s.trim())
+            .filter(s => s.length > 1)
+            .join(" ");
+        }
+      }
+    }
+
+    // 4. 若題幹完全無英文（純看圖選句），則朗讀正確答案
+    if (!textToRead || textToRead.trim() === "") {
+      if (q.opts && q.opts[q.ans]) {
+        textToRead = q.opts[q.ans].replace(/^[A-D]\.\s*/, '');
+      }
+    }
+
+    textToRead = textToRead.trim();
+    if (!textToRead) return;
+
+    const utt = new SpeechSynthesisUtterance(textToRead);
+    utt.lang = 'en-US';
+    utt.rate = 0.85; // 適合國小學習的穩定語速
+    utt.pitch = 1.0;
+
+    // 優先選用標準美語語音
+    const voices = window.speechSynthesis.getVoices();
+    const usVoice = voices.find(v => v.lang === 'en-US' || v.lang === 'en_US');
+    if (usVoice) utt.voice = usVoice;
+
+    window.speechSynthesis.speak(utt);
   }
 
   document.addEventListener("DOMContentLoaded", function() {
@@ -1195,7 +1245,13 @@
       i.addEventListener("change", refreshPoolBadge);
     });
 
-    // 啟動時檢查外部題庫
+    // 預載瀏覽器語音庫（避免部分行動端初次點擊無發音）
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.onvoiceschanged = () => {
+        window.speechSynthesis.getVoices();
+      };
+    }
+
     loadExternalQuestions();
   });
 </script>
