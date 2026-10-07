@@ -13,8 +13,6 @@
       --success-light: #ECFDF5;
       --danger: #EF4444;
       --danger-light: #FEF2F2;
-      --warning: #F59E0B;
-      --warning-light: #FFFBEB;
       --bg: #F8FAFC;
       --card-bg: #FFFFFF;
       --text: #1E293B;
@@ -60,7 +58,6 @@
       font-size: 14px;
     }
 
-    /* 篩選面版 */
     .filter-panel {
       background: var(--card-bg);
       border-radius: 14px;
@@ -151,7 +148,6 @@
       transform: translateY(-1px);
     }
 
-    /* 測驗進度 */
     .progress-box {
       margin-bottom: 16px;
     }
@@ -179,7 +175,6 @@
       transition: width 0.25s ease;
     }
 
-    /* 測驗卡片 */
     .quiz-card {
       background: var(--card-bg);
       border-radius: 16px;
@@ -203,16 +198,6 @@
       font-size: 12px;
       font-weight: 700;
       border-radius: 6px;
-    }
-
-    .tag.image-tag {
-      background: #FEF3C7;
-      color: #92400E;
-    }
-
-    .tag.spell-tag {
-      background: #E0E7FF;
-      color: #3730A3;
     }
 
     .btn-speak {
@@ -255,7 +240,6 @@
       margin-bottom: 20px;
     }
 
-    /* 一般選擇題按鈕 */
     .options {
       display: flex;
       flex-direction: column;
@@ -293,7 +277,7 @@
       font-weight: 700;
     }
 
-    /* 拼字特製區域：字母方塊與拼字槽 */
+    /* 拼字特製區域 */
     .spelling-board {
       margin: 16px 0;
       padding: 18px;
@@ -354,14 +338,9 @@
       transition: all 0.15s;
     }
 
-    .tile-btn:active {
-      transform: scale(0.92);
-    }
-
     .tile-btn:disabled {
       opacity: 0.3;
       cursor: not-allowed;
-      border-color: #CBD5E1;
     }
 
     .spell-controls {
@@ -514,44 +493,44 @@
     <p>看圖理解 • 單字拼字 • 動作動詞 • 否定句構</p>
   </header>
 
-  <!-- 篩選面板 -->
+  <!-- 固定的 8 大領域面板（不會隨意長出新分類） -->
   <div class="filter-panel" id="filterPanel">
     <div class="filter-title">
       <span>🎯 選擇特訓領域類型</span>
-      <span class="filter-badge" id="poolBadge">包含 350 題</span>
+      <span class="filter-badge" id="poolBadge">載入題庫中...</span>
     </div>
     <div class="filter-grid" id="filterGrid">
       <label class="filter-item">
         <input type="checkbox" value="單字拼字與填空" checked>
-        <span>🔠 單字拼字與字母填空 (互動方塊/首尾音)</span>
+        <span>🔠 單字拼字與填空</span>
       </label>
       <label class="filter-item">
         <input type="checkbox" value="看圖辨識題" checked>
-        <span>🖼️ 看圖理解題 (情境/鐘面/動作)</span>
+        <span>🖼️ 看圖理解題</span>
       </label>
       <label class="filter-item">
         <input type="checkbox" value="動作動詞認讀" checked>
-        <span>🏃 動作動詞認讀 (read, jump, swim)</span>
+        <span>🏃 動作動詞認讀</span>
       </label>
       <label class="filter-item">
         <input type="checkbox" value="否定句構理解" checked>
-        <span>⛔ 否定句型理解 (not, can't, isn't)</span>
+        <span>⛔ 否定句型理解</span>
       </label>
       <label class="filter-item">
         <input type="checkbox" value="日常對話理解" checked>
-        <span>💬 日常生活問答 (時間/年齡/常用語)</span>
+        <span>💬 日常生活問答</span>
       </label>
       <label class="filter-item">
         <input type="checkbox" value="生活核心詞彙" checked>
-        <span>🍎 生活核心詞彙 (親屬/食物/天氣/情緒)</span>
+        <span>🍎 生活核心詞彙</span>
       </label>
       <label class="filter-item">
         <input type="checkbox" value="篇章閱讀理解" checked>
-        <span>📖 簡易篇章閱讀 (短文推論/主旨)</span>
+        <span>📖 簡易篇章閱讀</span>
       </label>
       <label class="filter-item">
         <input type="checkbox" value="自然拼讀規則" checked>
-        <span>🔤 語音與字母拼讀 (sh, ch, th, 子音串)</span>
+        <span>🔤 語音與拼讀規則</span>
       </label>
     </div>
     <div class="filter-actions">
@@ -582,7 +561,6 @@
       <button class="btn-speak" type="button" id="btnSpeak">🔊 朗讀發音</button>
     </div>
 
-    <!-- 圖片插槽 -->
     <div class="question-illustration" id="illustrationBox" style="display:none;">
       <div id="svgContainer"></div>
       <div class="illustration-caption" id="illustrationCaption"></div>
@@ -601,9 +579,7 @@
       </div>
     </div>
 
-    <!-- 一般選擇題按鈕區域 -->
     <div class="options" id="options"></div>
-
     <div class="feedback-box" id="feedback"></div>
     <button class="btn-next" type="button" id="btnNext">下一題 →</button>
   </div>
@@ -632,7 +608,7 @@
 </div>
 
 <script>
-  // 1. 向量 SVG 圖像生成
+  // 1. 向量 SVG 圖庫
   function getClockSvg(hour) {
     const angle = (hour % 12) * 30 * Math.PI / 180;
     const hx = (50 + 24 * Math.sin(angle)).toFixed(1);
@@ -673,25 +649,24 @@
     '<path d="M85 35 q-35 -10 -35 15 v35 q20 -12 35 -2 z" fill="#EEF2FF" stroke="#4F46E5" stroke-width="3"/>' +
     '</svg>';
 
-  // 2. 建立題庫（涵蓋 350+ 題）
+  // 2. 內建 350+ 題基本庫
   const masterQuestions = [];
 
-  // (A) 單字拼字與字母填空專項（新增 40 題）
+  // 單字拼字與填空
   const spellingWordBank = [
-    { w: "read", zh: "閱讀/看書", hint: "r - e - a - d", type: "tiles" },
-    { w: "jump", zh: "跳躍", hint: "j - u - m - p", type: "tiles" },
-    { w: "swim", zh: "游泳", hint: "s - w - i - m", type: "tiles" },
-    { w: "cook", zh: "煮飯/烹飪", hint: "c - o - o - k", type: "tiles" },
-    { w: "sing", zh: "唱歌", hint: "s - i - n - g", type: "tiles" },
-    { w: "tall", zh: "高的", hint: "t - a - l - l", type: "tiles" },
-    { w: "cold", zh: "寒冷的", hint: "c - o - l - d", type: "tiles" },
-    { w: "book", zh: "書本", hint: "b - o - o - k", type: "tiles" },
-    { w: "rain", zh: "雨水/下雨", hint: "r - a - i - n", type: "tiles" },
-    { w: "nine", zh: "數字九", hint: "n - i - n - e", type: "tiles" }
+    { w: "read", zh: "閱讀/看書", hint: "r - e - a - d" },
+    { w: "jump", zh: "跳躍", hint: "j - u - m - p" },
+    { w: "swim", zh: "游泳", hint: "s - w - i - m" },
+    { w: "cook", zh: "煮飯/烹飪", hint: "c - o - o - k" },
+    { w: "sing", zh: "唱歌", hint: "s - i - n - g" },
+    { w: "tall", zh: "高的", hint: "t - a - l - l" },
+    { w: "cold", zh: "寒冷的", hint: "c - o - l - d" },
+    { w: "book", zh: "書本", hint: "b - o - o - k" },
+    { w: "rain", zh: "雨水/下雨", hint: "r - a - i - n" },
+    { w: "nine", zh: "數字九", hint: "n - i - n - e" }
   ];
 
-  spellingWordBank.forEach(function(item, idx) {
-    // 互動點選方塊拼字題
+  spellingWordBank.forEach(function(item) {
     masterQuestions.push({
       cat: "單字拼字與填空",
       isSpellingTiles: true,
@@ -700,7 +675,6 @@
       exp: "正確拼法為 <strong>" + item.w + "</strong>（" + item.hint + "）。"
     });
 
-    // 缺空填字母選擇題
     const blanks = [
       { stem: "請填入缺空的字母完成「" + item.zh + "」：" + item.w[0] + " _ _ " + item.w[item.w.length - 1], correct: item.w.slice(1, -1) },
       { stem: "單字首尾音辨析：「" + item.zh + "」的正確英文拼法是？", correct: item.w }
@@ -720,7 +694,7 @@
     });
   });
 
-  // (B) 看圖理解題（35 題）
+  // 看圖題
   masterQuestions.push(
     { cat: "看圖辨識題", svg: getClockSvg(9), cap: "看時鐘短針與長針", stem: "看圖選出現在的時間：", opts: ["A. It's nine o'clock.", "B. It's three o'clock.", "C. It's six o'clock.", "D. It's twelve o'clock."], ans: 0, exp: "短針指在 9，代表 9 點整 (It's nine o'clock)。" },
     { cat: "看圖辨識題", svg: getClockSvg(3), cap: "看時鐘短針與長針", stem: "看圖選出正確時間：", opts: ["A. It's three o'clock.", "B. It's one o'clock.", "C. It's five o'clock.", "D. It's seven o'clock."], ans: 0, exp: "短針指在 3，代表 3 點整 (It's three o'clock)。" },
@@ -743,7 +717,7 @@
     });
   }
 
-  // (C) 動作動詞認讀（60 題）
+  // 動作動詞認讀
   const verbList = [
     { en: "read", zh: "看書/閱讀", s: "I like to _____ books in the library." },
     { en: "jump", zh: "跳躍", s: "Rabbits can _____ very high." },
@@ -768,7 +742,7 @@
     });
   }
 
-  // (D) 否定句型題（55 題）
+  // 否定句型題
   const negList = [
     { s: "It is not sunny today.", zh: "今天不是晴天。" },
     { s: "I can't read this word.", zh: "我看不懂/不會讀這個單字。" },
@@ -788,7 +762,7 @@
     });
   }
 
-  // (E) 日常對話題（50 題）
+  // 日常對話題
   const diaList = [
     { q: "What time is it now?", a: "It's nine o'clock.", w1: "I am eleven years old.", w2: "I want an apple.", exp: "問時間 (What time)，回答時間點鐘。" },
     { q: "How old are you?", a: "I am eleven years old.", w1: "It's cold today.", w2: "It is three o'clock.", exp: "問年齡 (How old)，回答幾歲 (years old)。" },
@@ -808,7 +782,7 @@
     });
   }
 
-  // (F) 生活詞彙題（50 題）
+  // 生活詞彙題
   const vocabList = [
     { w: "father", zh: "父親/爸爸" }, { w: "mother", zh: "母親/媽媽" },
     { w: "happy", zh: "高興的" }, { w: "sad", zh: "難過的" },
@@ -829,7 +803,7 @@
     });
   }
 
-  // (G) 篇章閱讀題（40 題）
+  // 篇章閱讀題
   for(let i=0; i<40; i++) {
     masterQuestions.push({
       cat: "篇章閱讀理解",
@@ -840,7 +814,7 @@
     });
   }
 
-  // (H) 自然拼讀題（40 題）
+  // 自然拼讀題
   const phList = [
     { p: "sh", words: "ship, shop, fish", exp: "雙字母子音 sh 發 /ʃ/ 音" },
     { p: "ch", words: "chair, lunch, chick", exp: "雙字母子音 ch 發 /tʃ/ 音" },
@@ -858,14 +832,31 @@
     });
   }
 
-  // 3. 測驗執行邏輯與狀態
+  // 自動無縫載入外部 questions.json 並合併到既有題庫
+  async function loadExternalQuestions() {
+    try {
+      const res = await fetch('questions.json?t=' + Date.now());
+      if (res.ok) {
+        const extraQuestions = await res.json();
+        if (Array.isArray(extraQuestions) && extraQuestions.length > 0) {
+          // 自動將外部新題目匯入合併，絕不新增額外分類
+          masterQuestions.push(...extraQuestions);
+          console.log("成功無縫匯入外部新題庫，共匯入: " + extraQuestions.length + " 題");
+        }
+      }
+    } catch(e) {
+      console.log("未檢測到額外外部題庫或正在離線使用，採用核心題庫。");
+    }
+    refreshPoolBadge();
+  }
+
+  // 3. 測驗執行邏輯
   let sessionQuestions = [];
   let currentQIdx = 0;
   let correctCount = 0;
   let isAnswered = false;
   let mistakes = [];
 
-  // 拼字題專屬狀態
   let userTypedLetters = [];
   let availableTiles = [];
 
@@ -898,7 +889,6 @@
       return;
     }
 
-    // 隨機抽 25 題
     const shuffled = matched.slice().sort(function() { return 0.5 - Math.random(); });
     sessionQuestions = shuffled.slice(0, Math.min(25, shuffled.length));
 
@@ -918,14 +908,9 @@
     isAnswered = false;
     const q = sessionQuestions[currentQIdx];
 
-    // 標籤樣式
     const tagEl = document.getElementById("tag");
     tagEl.innerText = q.cat;
-    if (q.cat === "看圖辨識題") tagEl.className = "tag image-tag";
-    else if (q.cat === "單字拼字與填空") tagEl.className = "tag spell-tag";
-    else tagEl.className = "tag";
 
-    // 圖片插槽
     const illustBox = document.getElementById("illustrationBox");
     const svgBox = document.getElementById("svgContainer");
     const capBox = document.getElementById("illustrationCaption");
@@ -939,12 +924,10 @@
       svgBox.innerHTML = "";
     }
 
-    // 題幹
     document.getElementById("stem").innerHTML = q.stem;
     document.getElementById("feedback").style.display = "none";
     document.getElementById("btnNext").style.display = "none";
 
-    // 進度更新
     const pct = ((currentQIdx) / sessionQuestions.length) * 100;
     document.getElementById("progressBar").style.width = pct + "%";
     document.getElementById("qCountText").innerText = "第 " + (currentQIdx + 1) + " / " + sessionQuestions.length + " 題";
@@ -953,7 +936,6 @@
     const optBox = document.getElementById("options");
     const spellingBoard = document.getElementById("spellingBoard");
 
-    // 判斷是否為方塊拼字題
     if (q.isSpellingTiles) {
       optBox.style.display = "none";
       spellingBoard.style.display = "block";
@@ -963,7 +945,7 @@
       optBox.style.display = "flex";
       optBox.innerHTML = "";
 
-      q.opts.forEach(function(optText, idx) {
+      (q.opts || []).forEach(function(optText, idx) {
         const btn = document.createElement("button");
         btn.className = "option-btn";
         btn.type = "button";
@@ -974,14 +956,11 @@
     }
   }
 
-  // 設定字母方塊拼字
   function setupSpellingBoard(targetWord) {
     userTypedLetters = [];
-    // 打散字母並多給 1-2 個干擾字母
     const distractors = ["a", "e", "s", "t", "r"].filter(ch => !targetWord.includes(ch));
-    const extraLetter = distractors[Math.floor(Math.random() * distractors.length)] || "e";
-    const letters = (targetWord + extraLetter).split("").sort(() => 0.5 - Math.random());
-
+    const extra = distractors[Math.floor(Math.random() * distractors.length)] || "e";
+    const letters = (targetWord + extra).split("").sort(() => 0.5 - Math.random());
     availableTiles = letters.map((l, i) => ({ id: i, letter: l, used: false }));
 
     renderSpellingSlots(targetWord.length);
@@ -1028,8 +1007,8 @@
   function backspaceTile() {
     if (isAnswered || userTypedLetters.length === 0) return;
     const removed = userTypedLetters.pop();
-    const originalTile = availableTiles.find(t => t.id === removed.id);
-    if (originalTile) originalTile.used = false;
+    const orig = availableTiles.find(t => t.id === removed.id);
+    if (orig) orig.used = false;
 
     const q = sessionQuestions[currentQIdx];
     renderSpellingSlots(q.word.length);
@@ -1048,8 +1027,7 @@
   }
 
   function updateSubmitBtn(targetLen) {
-    const btn = document.getElementById("btnSpellSubmit");
-    btn.disabled = (userTypedLetters.length !== targetLen) || isAnswered;
+    document.getElementById("btnSpellSubmit").disabled = (userTypedLetters.length !== targetLen) || isAnswered;
   }
 
   function submitSpelling() {
@@ -1070,22 +1048,14 @@
     } else {
       fbox.className = "feedback-box wrong";
       fbox.innerHTML = "<strong>💡 差一點點！你拼成了「" + userSpelling + "」</strong><br>" + q.exp;
-      mistakes.push({
-        stem: q.stem,
-        cat: q.cat,
-        correct: q.word,
-        exp: q.exp
-      });
+      mistakes.push({ stem: q.stem, cat: q.cat, correct: q.word, exp: q.exp });
     }
 
     document.getElementById("btnSpellSubmit").disabled = true;
-    document.getElementById("btnSpellBackspace").disabled = true;
-    document.getElementById("btnSpellReset").disabled = true;
     document.getElementById("scoreText").innerText = "即時答對：" + correctCount + " 題";
     document.getElementById("btnNext").style.display = "block";
   }
 
-  // 選擇題答題處理
   function handleAnswer(choiceIdx) {
     if (isAnswered) return;
     isAnswered = true;
@@ -1108,12 +1078,7 @@
     } else {
       fbox.className = "feedback-box wrong";
       fbox.innerHTML = "<strong>💡 差一點點！仔細看說明：</strong><br>" + q.exp;
-      mistakes.push({
-        stem: q.stem,
-        cat: q.cat,
-        correct: q.opts[q.ans],
-        exp: q.exp
-      });
+      mistakes.push({ stem: q.stem, cat: q.cat, correct: q.opts[q.ans], exp: q.exp });
     }
 
     document.getElementById("scoreText").innerText = "即時答對：" + correctCount + " 題";
@@ -1148,7 +1113,6 @@
     }
     document.getElementById("resultDesc").innerText = desc;
 
-    // 領域統計
     const stat = {};
     sessionQuestions.forEach(function(q) {
       if (!stat[q.cat]) stat[q.cat] = { total: 0, right: 0 };
@@ -1171,7 +1135,6 @@
       reportBox.appendChild(row);
     });
 
-    // 錯題本
     const mBox = document.getElementById("mistakeListBox");
     const mContainer = document.getElementById("mistakeContainer");
     if (mistakes.length > 0) {
@@ -1194,25 +1157,20 @@
     const q = sessionQuestions[currentQIdx];
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
-      // 若為拼字題，直接朗讀單字，否則朗讀題目
       const txt = q.isSpellingTiles ? q.word : q.stem.replace(/<[^>]*>/g, '');
       const utt = new SpeechSynthesisUtterance(txt);
       utt.lang = 'en-US';
       utt.rate = 0.85;
       window.speechSynthesis.speak(utt);
-    } else {
-      alert("您的載具暫不支援語音朗讀功能。");
     }
   }
 
-  // 事件綁定
   document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("btnStartQuiz").addEventListener("click", launchSession);
     document.getElementById("btnNext").addEventListener("click", stepNext);
     document.getElementById("btnSpeak").addEventListener("click", readAloud);
     document.getElementById("btnRestartQuiz").addEventListener("click", launchSession);
 
-    // 拼字按鈕事件
     document.getElementById("btnSpellBackspace").addEventListener("click", backspaceTile);
     document.getElementById("btnSpellReset").addEventListener("click", resetTiles);
     document.getElementById("btnSpellSubmit").addEventListener("click", submitSpelling);
@@ -1237,7 +1195,8 @@
       i.addEventListener("change", refreshPoolBadge);
     });
 
-    refreshPoolBadge();
+    // 啟動時檢查外部題庫
+    loadExternalQuestions();
   });
 </script>
 
