@@ -1,0 +1,21 @@
+[
+  {
+    "cat": "單字拼字與填空",
+    "isSpellingTiles": true,
+    "word": "apple",
+    "stem": "【互動方塊拼字】請依序點選下方字母，拼出單字「<strong>蘋果</strong>」：",
+    "exp": "正確拼法為 apple。"
+  },
+  {
+    "cat": "考古題精選",
+    "stem": "【112學年度考古題】選出正確的問答：<br>A: \"What time is it?\"<br>B: \"________\"",
+    "opts": [
+      "A. It's ten o'clock.",
+      "B. I am eleven.",
+      "C. It is rainy.",
+      "D. I want milk."
+    ],
+    "ans": 0,
+    "exp": "詢問時間 What time is it 應回答點鐘 It's ten o'clock。"
+  }
+]
