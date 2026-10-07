@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>五年級英語重點闖關特訓測驗平台</title>
+  <title>五年級英語學習扶助特訓測驗平台</title>
   <style>
     :root {
       --primary: #4F46E5;
@@ -277,6 +277,7 @@
       font-weight: 700;
     }
 
+    /* 拼字特製區域 */
     .spelling-board {
       margin: 16px 0;
       padding: 18px;
@@ -492,20 +493,45 @@
     <p>看圖理解 • 單字拼字 • 動作動詞 • 否定句構</p>
   </header>
 
+  <!-- 固定的 8 大領域面板（不會隨意長出新分類） -->
   <div class="filter-panel" id="filterPanel">
     <div class="filter-title">
       <span>🎯 選擇特訓領域類型</span>
       <span class="filter-badge" id="poolBadge">載入題庫中...</span>
     </div>
     <div class="filter-grid" id="filterGrid">
-      <label class="filter-item"><input type="checkbox" value="單字拼字與填空" checked><span>🔠 單字拼字與填空</span></label>
-      <label class="filter-item"><input type="checkbox" value="看圖辨識題" checked><span>🖼️ 看圖理解題</span></label>
-      <label class="filter-item"><input type="checkbox" value="動作動詞認讀" checked><span>🏃 動作動詞認讀</span></label>
-      <label class="filter-item"><input type="checkbox" value="否定句構理解" checked><span>⛔ 否定句型理解</span></label>
-      <label class="filter-item"><input type="checkbox" value="日常對話理解" checked><span>💬 日常生活問答</span></label>
-      <label class="filter-item"><input type="checkbox" value="生活核心詞彙" checked><span>🍎 生活核心詞彙</span></label>
-      <label class="filter-item"><input type="checkbox" value="篇章閱讀理解" checked><span>📖 簡易篇章閱讀</span></label>
-      <label class="filter-item"><input type="checkbox" value="自然拼讀規則" checked><span>🔤 語音與拼讀規則</span></label>
+      <label class="filter-item">
+        <input type="checkbox" value="單字拼字與填空" checked>
+        <span>🔠 單字拼字與填空</span>
+      </label>
+      <label class="filter-item">
+        <input type="checkbox" value="看圖辨識題" checked>
+        <span>🖼️ 看圖理解題</span>
+      </label>
+      <label class="filter-item">
+        <input type="checkbox" value="動作動詞認讀" checked>
+        <span>🏃 動作動詞認讀</span>
+      </label>
+      <label class="filter-item">
+        <input type="checkbox" value="否定句構理解" checked>
+        <span>⛔ 否定句型理解</span>
+      </label>
+      <label class="filter-item">
+        <input type="checkbox" value="日常對話理解" checked>
+        <span>💬 日常生活問答</span>
+      </label>
+      <label class="filter-item">
+        <input type="checkbox" value="生活核心詞彙" checked>
+        <span>🍎 生活核心詞彙</span>
+      </label>
+      <label class="filter-item">
+        <input type="checkbox" value="篇章閱讀理解" checked>
+        <span>📖 簡易篇章閱讀</span>
+      </label>
+      <label class="filter-item">
+        <input type="checkbox" value="自然拼讀規則" checked>
+        <span>🔤 語音與拼讀規則</span>
+      </label>
     </div>
     <div class="filter-actions">
       <div>
@@ -517,6 +543,7 @@
     </div>
   </div>
 
+  <!-- 進度列 -->
   <div class="progress-box" id="progressBox" style="display:none;">
     <div class="progress-meta">
       <span id="qCountText">第 1 / 25 題</span>
@@ -527,6 +554,7 @@
     </div>
   </div>
 
+  <!-- 測驗題目卡片 -->
   <div class="quiz-card" id="quizCard" style="display:none;">
     <div class="tag-row">
       <span class="tag" id="tag">領域標籤</span>
@@ -540,6 +568,7 @@
 
     <div class="question-stem" id="stem">載入題目中...</div>
 
+    <!-- 拼字專用字母槽區域 -->
     <div class="spelling-board" id="spellingBoard" style="display:none;">
       <div class="spell-slots" id="spellSlots"></div>
       <div class="letter-tiles" id="letterTiles"></div>
@@ -555,6 +584,7 @@
     <button class="btn-next" type="button" id="btnNext">下一題 →</button>
   </div>
 
+  <!-- 成績結算卡片 -->
   <div class="result-card" id="resultCard">
     <div class="score-circle" id="scoreCircle">100</div>
     <h2 id="resultTitle">測驗完成！</h2>
@@ -578,6 +608,7 @@
 </div>
 
 <script>
+  // 1. 向量 SVG 圖庫
   function getClockSvg(hour) {
     const angle = (hour % 12) * 30 * Math.PI / 180;
     const hx = (50 + 24 * Math.sin(angle)).toFixed(1);
@@ -618,10 +649,10 @@
     '<path d="M85 35 q-35 -10 -35 15 v35 q20 -12 35 -2 z" fill="#EEF2FF" stroke="#4F46E5" stroke-width="3"/>' +
     '</svg>';
 
-  // 內建超過 350 題題庫
+  // 2. 內建 350+ 題基本庫
   const masterQuestions = [];
 
-  // 1. 單字拼字與填空
+  // 單字拼字與填空
   const spellingWordBank = [
     { w: "read", zh: "閱讀/看書", hint: "r - e - a - d" },
     { w: "jump", zh: "跳躍", hint: "j - u - m - p" },
@@ -663,7 +694,7 @@
     });
   });
 
-  // 2. 看圖辨識題
+  // 看圖題
   masterQuestions.push(
     { cat: "看圖辨識題", svg: getClockSvg(9), cap: "看時鐘短針與長針", stem: "看圖選出現在的時間：", opts: ["A. It's nine o'clock.", "B. It's three o'clock.", "C. It's six o'clock.", "D. It's twelve o'clock."], ans: 0, exp: "短針指在 9，代表 9 點整 (It's nine o'clock)。" },
     { cat: "看圖辨識題", svg: getClockSvg(3), cap: "看時鐘短針與長針", stem: "看圖選出正確時間：", opts: ["A. It's three o'clock.", "B. It's one o'clock.", "C. It's five o'clock.", "D. It's seven o'clock."], ans: 0, exp: "短針指在 3，代表 3 點整 (It's three o'clock)。" },
@@ -686,7 +717,7 @@
     });
   }
 
-  // 3. 動作動詞認讀
+  // 動作動詞認讀
   const verbList = [
     { en: "read", zh: "看書/閱讀", s: "I like to _____ books in the library." },
     { en: "jump", zh: "跳躍", s: "Rabbits can _____ very high." },
@@ -711,7 +742,7 @@
     });
   }
 
-  // 4. 否定句構理解
+  // 否定句型題
   const negList = [
     { s: "It is not sunny today.", zh: "今天不是晴天。" },
     { s: "I can't read this word.", zh: "我看不懂/不會讀這個單字。" },
@@ -731,7 +762,7 @@
     });
   }
 
-  // 5. 日常對話理解
+  // 日常對話題
   const diaList = [
     { q: "What time is it now?", a: "It's nine o'clock.", w1: "I am eleven years old.", w2: "I want an apple.", exp: "問時間 (What time)，回答時間點鐘。" },
     { q: "How old are you?", a: "I am eleven years old.", w1: "It's cold today.", w2: "It is three o'clock.", exp: "問年齡 (How old)，回答幾歲 (years old)。" },
@@ -751,7 +782,7 @@
     });
   }
 
-  // 6. 生活核心詞彙
+  // 生活詞彙題
   const vocabList = [
     { w: "father", zh: "父親/爸爸" }, { w: "mother", zh: "母親/媽媽" },
     { w: "happy", zh: "高興的" }, { w: "sad", zh: "難過的" },
@@ -772,7 +803,7 @@
     });
   }
 
-  // 7. 篇章閱讀理解
+  // 篇章閱讀題
   for(let i=0; i<40; i++) {
     masterQuestions.push({
       cat: "篇章閱讀理解",
@@ -783,7 +814,7 @@
     });
   }
 
-  // 8. 自然拼讀規則
+  // 自然拼讀題
   const phList = [
     { p: "sh", words: "ship, shop, fish", exp: "雙字母子音 sh 發 /ʃ/ 音" },
     { p: "ch", words: "chair, lunch, chick", exp: "雙字母子音 ch 發 /tʃ/ 音" },
@@ -801,7 +832,25 @@
     });
   }
 
-  // 測驗控制邏輯
+  // 自動無縫載入外部 questions.json 並合併到既有題庫
+  async function loadExternalQuestions() {
+    try {
+      const res = await fetch('questions.json?t=' + Date.now());
+      if (res.ok) {
+        const extraQuestions = await res.json();
+        if (Array.isArray(extraQuestions) && extraQuestions.length > 0) {
+          // 自動將外部新題目匯入合併，絕不新增額外分類
+          masterQuestions.push(...extraQuestions);
+          console.log("成功無縫匯入外部新題庫，共匯入: " + extraQuestions.length + " 題");
+        }
+      }
+    } catch(e) {
+      console.log("未檢測到額外外部題庫或正在離線使用，採用核心題庫。");
+    }
+    refreshPoolBadge();
+  }
+
+  // 3. 測驗執行邏輯
   let sessionQuestions = [];
   let currentQIdx = 0;
   let correctCount = 0;
@@ -859,7 +908,8 @@
     isAnswered = false;
     const q = sessionQuestions[currentQIdx];
 
-    document.getElementById("tag").innerText = q.cat;
+    const tagEl = document.getElementById("tag");
+    tagEl.innerText = q.cat;
 
     const illustBox = document.getElementById("illustrationBox");
     const svgBox = document.getElementById("svgContainer");
@@ -1145,7 +1195,8 @@
       i.addEventListener("change", refreshPoolBadge);
     });
 
-    refreshPoolBadge();
+    // 啟動時檢查外部題庫
+    loadExternalQuestions();
   });
 </script>
 
