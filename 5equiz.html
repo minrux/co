@@ -13,6 +13,8 @@
       --success-light: #ECFDF5;
       --danger: #EF4444;
       --danger-light: #FEF2F2;
+      --warning: #F59E0B;
+      --warning-light: #FFFBEB;
       --bg: #F8FAFC;
       --card-bg: #FFFFFF;
       --text: #1E293B;
@@ -38,7 +40,7 @@
 
     .container {
       width: 100%;
-      max-width: 740px;
+      max-width: 760px;
     }
 
     header {
@@ -58,6 +60,7 @@
       font-size: 14px;
     }
 
+    /* 篩選面版 */
     .filter-panel {
       background: var(--card-bg);
       border-radius: 14px;
@@ -148,6 +151,7 @@
       transform: translateY(-1px);
     }
 
+    /* 測驗進度 */
     .progress-box {
       margin-bottom: 16px;
     }
@@ -175,6 +179,7 @@
       transition: width 0.25s ease;
     }
 
+    /* 測驗卡片 */
     .quiz-card {
       background: var(--card-bg);
       border-radius: 16px;
@@ -205,6 +210,11 @@
       color: #92400E;
     }
 
+    .tag.spell-tag {
+      background: #E0E7FF;
+      color: #3730A3;
+    }
+
     .btn-speak {
       background: #F1F5F9;
       border: 1px solid var(--border);
@@ -227,9 +237,9 @@
     }
 
     .question-illustration svg {
-      max-width: 140px;
-      max-height: 140px;
-      margin-bottom: 8px;
+      max-width: 130px;
+      max-height: 130px;
+      margin-bottom: 6px;
     }
 
     .illustration-caption {
@@ -245,6 +255,7 @@
       margin-bottom: 20px;
     }
 
+    /* 一般選擇題按鈕 */
     .options {
       display: flex;
       flex-direction: column;
@@ -280,6 +291,109 @@
       background-color: var(--danger-light);
       color: #991B1B;
       font-weight: 700;
+    }
+
+    /* 拼字特製區域：字母方塊與拼字槽 */
+    .spelling-board {
+      margin: 16px 0;
+      padding: 18px;
+      background: #F8FAFC;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .spell-slots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      min-height: 52px;
+    }
+
+    .spell-slot {
+      width: 48px;
+      height: 52px;
+      border: 2px dashed #94A3B8;
+      border-radius: 8px;
+      background: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--primary);
+      text-transform: lowercase;
+    }
+
+    .spell-slot.filled {
+      border-style: solid;
+      border-color: var(--primary);
+      background: #EEF2FF;
+    }
+
+    .letter-tiles {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .tile-btn {
+      width: 48px;
+      height: 48px;
+      background: #FFFFFF;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      transition: all 0.15s;
+    }
+
+    .tile-btn:active {
+      transform: scale(0.92);
+    }
+
+    .tile-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      border-color: #CBD5E1;
+    }
+
+    .spell-controls {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .btn-spell-action {
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-spell-submit {
+      padding: 8px 20px;
+      border-radius: 8px;
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-spell-submit:disabled {
+      background: #CBD5E1;
+      cursor: not-allowed;
     }
 
     .feedback-box {
@@ -397,16 +511,20 @@
 <div class="container">
   <header>
     <h1>五年級英語重點闖關特訓</h1>
-    <p>看圖理解 • 動作動詞 • 否定句構 • 日常生活問答</p>
+    <p>看圖理解 • 單字拼字 • 動作動詞 • 否定句構</p>
   </header>
 
   <!-- 篩選面板 -->
   <div class="filter-panel" id="filterPanel">
     <div class="filter-title">
       <span>🎯 選擇特訓領域類型</span>
-      <span class="filter-badge" id="poolBadge">包含 320 題</span>
+      <span class="filter-badge" id="poolBadge">包含 350 題</span>
     </div>
     <div class="filter-grid" id="filterGrid">
+      <label class="filter-item">
+        <input type="checkbox" value="單字拼字與填空" checked>
+        <span>🔠 單字拼字與字母填空 (互動方塊/首尾音)</span>
+      </label>
       <label class="filter-item">
         <input type="checkbox" value="看圖辨識題" checked>
         <span>🖼️ 看圖理解題 (情境/鐘面/動作)</span>
@@ -461,16 +579,31 @@
   <div class="quiz-card" id="quizCard" style="display:none;">
     <div class="tag-row">
       <span class="tag" id="tag">領域標籤</span>
-      <button class="btn-speak" type="button" id="btnSpeak">🔊 朗讀題目</button>
+      <button class="btn-speak" type="button" id="btnSpeak">🔊 朗讀發音</button>
     </div>
 
+    <!-- 圖片插槽 -->
     <div class="question-illustration" id="illustrationBox" style="display:none;">
       <div id="svgContainer"></div>
       <div class="illustration-caption" id="illustrationCaption"></div>
     </div>
 
     <div class="question-stem" id="stem">載入題目中...</div>
+
+    <!-- 拼字專用字母槽區域 -->
+    <div class="spelling-board" id="spellingBoard" style="display:none;">
+      <div class="spell-slots" id="spellSlots"></div>
+      <div class="letter-tiles" id="letterTiles"></div>
+      <div class="spell-controls">
+        <button class="btn-spell-action" type="button" id="btnSpellBackspace">⌫ 退格</button>
+        <button class="btn-spell-action" type="button" id="btnSpellReset">↺ 重選</button>
+        <button class="btn-spell-submit" type="button" id="btnSpellSubmit" disabled>送出答案</button>
+      </div>
+    </div>
+
+    <!-- 一般選擇題按鈕區域 -->
     <div class="options" id="options"></div>
+
     <div class="feedback-box" id="feedback"></div>
     <button class="btn-next" type="button" id="btnNext">下一題 →</button>
   </div>
@@ -499,7 +632,7 @@
 </div>
 
 <script>
-  // 1. SVG 向量圖形庫
+  // 1. 向量 SVG 圖像生成
   function getClockSvg(hour) {
     const angle = (hour % 12) * 30 * Math.PI / 180;
     const hx = (50 + 24 * Math.sin(angle)).toFixed(1);
@@ -540,27 +673,69 @@
     '<path d="M85 35 q-35 -10 -35 15 v35 q20 -12 35 -2 z" fill="#EEF2FF" stroke="#4F46E5" stroke-width="3"/>' +
     '</svg>';
 
-  // 2. 構建超過 320 題的結構化題庫
+  // 2. 建立題庫（涵蓋 350+ 題）
   const masterQuestions = [];
 
-  // 看圖題
-  const basicImgs = [
-    { cat: "看圖辨識題", svg: getClockSvg(9), cap: "請看時鐘短針與長針", stem: "看圖選出現在的時間：", opts: ["A. It's nine o'clock.", "B. It's three o'clock.", "C. It's six o'clock.", "D. It's twelve o'clock."], ans: 0, exp: "短針指在 9，代表 9 點整 (It's nine o'clock)。" },
-    { cat: "看圖辨識題", svg: getClockSvg(3), cap: "請看時鐘短針與長針", stem: "看圖選出正確時間：", opts: ["A. It's three o'clock.", "B. It's one o'clock.", "C. It's five o'clock.", "D. It's seven o'clock."], ans: 0, exp: "短針指在 3，代表 3 點整 (It's three o'clock)。" },
-    { cat: "看圖辨識題", svg: SVG_JUMP, cap: "操場上的動作", stem: "看圖選出正確動作動詞：What can he do?", opts: ["A. He can jump.", "B. He can sleep.", "C. He can cook.", "D. He can read."], ans: 0, exp: "圖片動作為「跳躍 (jump)」。" },
+  // (A) 單字拼字與字母填空專項（新增 40 題）
+  const spellingWordBank = [
+    { w: "read", zh: "閱讀/看書", hint: "r - e - a - d", type: "tiles" },
+    { w: "jump", zh: "跳躍", hint: "j - u - m - p", type: "tiles" },
+    { w: "swim", zh: "游泳", hint: "s - w - i - m", type: "tiles" },
+    { w: "cook", zh: "煮飯/烹飪", hint: "c - o - o - k", type: "tiles" },
+    { w: "sing", zh: "唱歌", hint: "s - i - n - g", type: "tiles" },
+    { w: "tall", zh: "高的", hint: "t - a - l - l", type: "tiles" },
+    { w: "cold", zh: "寒冷的", hint: "c - o - l - d", type: "tiles" },
+    { w: "book", zh: "書本", hint: "b - o - o - k", type: "tiles" },
+    { w: "rain", zh: "雨水/下雨", hint: "r - a - i - n", type: "tiles" },
+    { w: "nine", zh: "數字九", hint: "n - i - n - e", type: "tiles" }
+  ];
+
+  spellingWordBank.forEach(function(item, idx) {
+    // 互動點選方塊拼字題
+    masterQuestions.push({
+      cat: "單字拼字與填空",
+      isSpellingTiles: true,
+      word: item.w,
+      stem: "【互動方塊拼字】請依序點選下方字母，拼出單字「<strong>" + item.zh + "</strong>」：",
+      exp: "正確拼法為 <strong>" + item.w + "</strong>（" + item.hint + "）。"
+    });
+
+    // 缺空填字母選擇題
+    const blanks = [
+      { stem: "請填入缺空的字母完成「" + item.zh + "」：" + item.w[0] + " _ _ " + item.w[item.w.length - 1], correct: item.w.slice(1, -1) },
+      { stem: "單字首尾音辨析：「" + item.zh + "」的正確英文拼法是？", correct: item.w }
+    ];
+
+    blanks.forEach(function(b) {
+      const distractors = ["ea", "oo", "ee", "ai", "ou"].filter(x => x !== b.correct);
+      const opts = [b.correct, distractors[0], distractors[1], distractors[2]].sort(() => 0.5 - Math.random());
+      masterQuestions.push({
+        cat: "單字拼字與填空",
+        isSpellingTiles: false,
+        stem: "【拼字填空】" + b.stem,
+        opts: opts.map((opt, oIdx) => String.fromCharCode(65 + oIdx) + ". " + opt),
+        ans: opts.indexOf(b.correct),
+        exp: "正確答案是「" + b.correct + "」，拼成完整單字為 " + item.w + "。"
+      });
+    });
+  });
+
+  // (B) 看圖理解題（35 題）
+  masterQuestions.push(
+    { cat: "看圖辨識題", svg: getClockSvg(9), cap: "看時鐘短針與長針", stem: "看圖選出現在的時間：", opts: ["A. It's nine o'clock.", "B. It's three o'clock.", "C. It's six o'clock.", "D. It's twelve o'clock."], ans: 0, exp: "短針指在 9，代表 9 點整 (It's nine o'clock)。" },
+    { cat: "看圖辨識題", svg: getClockSvg(3), cap: "看時鐘短針與長針", stem: "看圖選出正確時間：", opts: ["A. It's three o'clock.", "B. It's one o'clock.", "C. It's five o'clock.", "D. It's seven o'clock."], ans: 0, exp: "短針指在 3，代表 3 點整 (It's three o'clock)。" },
+    { cat: "看圖辨識題", svg: SVG_JUMP, cap: "操場上的動作", stem: "看圖選出正確動作：What can he do?", opts: ["A. He can jump.", "B. He can sleep.", "C. He can cook.", "D. He can read."], ans: 0, exp: "圖片動作為「跳躍 (jump)」。" },
     { cat: "看圖辨識題", svg: SVG_READ, cap: "書桌上的物品", stem: "看圖選出符合的句子：", opts: ["A. I can read a book.", "B. I can swim.", "C. It is raining.", "D. I want apples."], ans: 0, exp: "打開的書本對應動詞「read (閱讀)」。" },
     { cat: "看圖辨識題", svg: SVG_RAIN, cap: "窗外的天氣", stem: "看圖理解：How is the weather?", opts: ["A. It is rainy.", "B. It is sunny.", "C. It is windy.", "D. It is hot."], ans: 0, exp: "烏雲雨滴代表「下雨天 (rainy)」。" },
     { cat: "看圖辨識題", svg: SVG_SUN, cap: "戶外天氣", stem: "看圖選出天氣狀況：", opts: ["A. It is sunny.", "B. It is cold.", "C. It is raining.", "D. It is snowy."], ans: 0, exp: "太陽代表晴天 (sunny)。" }
-  ];
-  masterQuestions.push(...basicImgs);
+  );
 
-  // 鐘面延伸看圖題
   for(let i=1; i<=30; i++) {
     const h = (i % 12) === 0 ? 12 : (i % 12);
     masterQuestions.push({
       cat: "看圖辨識題",
       svg: getClockSvg(h),
-      cap: "鐘面指針位置練習",
+      cap: "鐘面指針練習",
       stem: "看鐘面指針回答：What time is it?",
       opts: ["A. It's " + h + " o'clock.", "B. It's " + ((h % 12) + 1) + " o'clock.", "C. It's 12 o'clock.", "D. It's 6 o'clock."],
       ans: 0,
@@ -568,7 +743,7 @@
     });
   }
 
-  // 動作動詞認讀題
+  // (C) 動作動詞認讀（60 題）
   const verbList = [
     { en: "read", zh: "看書/閱讀", s: "I like to _____ books in the library." },
     { en: "jump", zh: "跳躍", s: "Rabbits can _____ very high." },
@@ -593,7 +768,7 @@
     });
   }
 
-  // 否定句型題
+  // (D) 否定句型題（55 題）
   const negList = [
     { s: "It is not sunny today.", zh: "今天不是晴天。" },
     { s: "I can't read this word.", zh: "我看不懂/不會讀這個單字。" },
@@ -606,24 +781,19 @@
     const item = negList[i % negList.length];
     masterQuestions.push({
       cat: "否定句構理解",
-      stem: "【否定理解】請選出句子正確的中文意思：<br><strong>\"" + item.s + "\"</strong>",
-      opts: [
-        "A. " + item.zh,
-        "B. " + item.zh.replace("不", "非常"),
-        "C. 這是一句問候的話",
-        "D. 今天天氣很好"
-      ],
+      stem: "【否定理解】選出正確的中文意思：<br><strong>\"" + item.s + "\"</strong>",
+      opts: ["A. " + item.zh, "B. " + item.zh.replace("不", "非常"), "C. 這是一句問候的話", "D. 今天天氣很好"],
       ans: 0,
       exp: "句中含有 not 或 can't (can not)，代表否定語意，故選「" + item.zh + "」。"
     });
   }
 
-  // 日常對話題
+  // (E) 日常對話題（50 題）
   const diaList = [
-    { q: "What time is it now?", a: "It's nine o'clock.", w1: "I am eleven years old.", w2: "I want an apple.", exp: "問句問時間 (What time)，要回答點鐘 (o'clock)。" },
-    { q: "How old are you?", a: "I am eleven years old.", w1: "It's cold today.", w2: "It is three o'clock.", exp: "問句問年齡 (How old)，要回答幾歲 (years old)。" },
+    { q: "What time is it now?", a: "It's nine o'clock.", w1: "I am eleven years old.", w2: "I want an apple.", exp: "問時間 (What time)，回答時間點鐘。" },
+    { q: "How old are you?", a: "I am eleven years old.", w1: "It's cold today.", w2: "It is three o'clock.", exp: "問年齡 (How old)，回答幾歲 (years old)。" },
     { q: "How's the weather today?", a: "It is rainy. Take an umbrella.", w1: "I can jump.", w2: "He is my brother.", exp: "How's the weather 詢問天氣狀況。" },
-    { q: "Can you swim?", a: "No, I can't.", w1: "It's nine o'clock.", w2: "Yes, I am.", exp: "Can you... 的簡答應使用 can 或 can't。" }
+    { q: "Can you swim?", a: "No, I can't.", w1: "It's nine o'clock.", w2: "Yes, I am.", exp: "Can you... 問句應以 can 或 can't 回答。" }
   ];
 
   for(let i=0; i<50; i++) {
@@ -638,7 +808,7 @@
     });
   }
 
-  // 生活詞彙題
+  // (F) 生活詞彙題（50 題）
   const vocabList = [
     { w: "father", zh: "父親/爸爸" }, { w: "mother", zh: "母親/媽媽" },
     { w: "happy", zh: "高興的" }, { w: "sad", zh: "難過的" },
@@ -659,23 +829,18 @@
     });
   }
 
-  // 篇章閱讀題
+  // (G) 篇章閱讀題（40 題）
   for(let i=0; i<40; i++) {
     masterQuestions.push({
       cat: "篇章閱讀理解",
       stem: "【短文閱讀】<br><em>\"Hi, I am Sam. I am eleven years old. It is sunny today. I can run fast, but I can't swim.\"</em><br>根據這段話，下列何者正確？",
-      opts: [
-        "A. Sam 不會游泳 (can't swim)",
-        "B. Sam 今天遇到下雨天",
-        "C. Sam 不會快跑",
-        "D. Sam 今年九歲"
-      ],
+      opts: ["A. Sam 不會游泳 (can't swim)", "B. Sam 今天遇到下雨天", "C. Sam 不會快跑", "D. Sam 今年九歲"],
       ans: 0,
-      exp: "文中說「but I can't swim」，表示 Sam 不會游泳。"
+      exp: "文中提到「but I can't swim」，表示 Sam 不會游泳。"
     });
   }
 
-  // 自然拼讀題
+  // (H) 自然拼讀題（40 題）
   const phList = [
     { p: "sh", words: "ship, shop, fish", exp: "雙字母子音 sh 發 /ʃ/ 音" },
     { p: "ch", words: "chair, lunch, chick", exp: "雙字母子音 ch 發 /tʃ/ 音" },
@@ -687,23 +852,22 @@
     masterQuestions.push({
       cat: "自然拼讀規則",
       stem: "【拼讀發音】下列哪一組單字都含有雙字母組合「<strong>" + item.p + "</strong>」？",
-      opts: [
-        "A. " + item.words,
-        "B. cat, dog, pig",
-        "C. book, look, cook",
-        "D. jump, read, swim"
-      ],
+      opts: ["A. " + item.words, "B. cat, dog, pig", "C. book, look, cook", "D. jump, read, swim"],
       ans: 0,
       exp: item.exp + "，如單字：" + item.words + "。"
     });
   }
 
-  // 3. 測驗執行邏輯
+  // 3. 測驗執行邏輯與狀態
   let sessionQuestions = [];
   let currentQIdx = 0;
   let correctCount = 0;
   let isAnswered = false;
   let mistakes = [];
+
+  // 拼字題專屬狀態
+  let userTypedLetters = [];
+  let availableTiles = [];
 
   function getCheckedCategories() {
     const nodes = document.querySelectorAll("#filterGrid input:checked");
@@ -742,7 +906,6 @@
     correctCount = 0;
     mistakes = [];
 
-    // 切換顯示
     document.getElementById("filterPanel").style.display = "none";
     document.getElementById("resultCard").style.display = "none";
     document.getElementById("progressBox").style.display = "block";
@@ -755,12 +918,14 @@
     isAnswered = false;
     const q = sessionQuestions[currentQIdx];
 
-    // 標籤
+    // 標籤樣式
     const tagEl = document.getElementById("tag");
     tagEl.innerText = q.cat;
-    tagEl.className = q.cat === "看圖辨識題" ? "tag image-tag" : "tag";
+    if (q.cat === "看圖辨識題") tagEl.className = "tag image-tag";
+    else if (q.cat === "單字拼字與填空") tagEl.className = "tag spell-tag";
+    else tagEl.className = "tag";
 
-    // 圖片
+    // 圖片插槽
     const illustBox = document.getElementById("illustrationBox");
     const svgBox = document.getElementById("svgContainer");
     const capBox = document.getElementById("illustrationCaption");
@@ -774,31 +939,153 @@
       svgBox.innerHTML = "";
     }
 
-    // 題目與解析重置
+    // 題幹
     document.getElementById("stem").innerHTML = q.stem;
     document.getElementById("feedback").style.display = "none";
     document.getElementById("btnNext").style.display = "none";
 
-    // 進度
+    // 進度更新
     const pct = ((currentQIdx) / sessionQuestions.length) * 100;
     document.getElementById("progressBar").style.width = pct + "%";
     document.getElementById("qCountText").innerText = "第 " + (currentQIdx + 1) + " / " + sessionQuestions.length + " 題";
     document.getElementById("scoreText").innerText = "即時答對：" + correctCount + " 題";
 
-    // 選項按鈕
     const optBox = document.getElementById("options");
-    optBox.innerHTML = "";
+    const spellingBoard = document.getElementById("spellingBoard");
 
-    q.opts.forEach(function(optText, idx) {
+    // 判斷是否為方塊拼字題
+    if (q.isSpellingTiles) {
+      optBox.style.display = "none";
+      spellingBoard.style.display = "block";
+      setupSpellingBoard(q.word);
+    } else {
+      spellingBoard.style.display = "none";
+      optBox.style.display = "flex";
+      optBox.innerHTML = "";
+
+      q.opts.forEach(function(optText, idx) {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.type = "button";
+        btn.innerText = optText;
+        btn.onclick = function() { handleAnswer(idx); };
+        optBox.appendChild(btn);
+      });
+    }
+  }
+
+  // 設定字母方塊拼字
+  function setupSpellingBoard(targetWord) {
+    userTypedLetters = [];
+    // 打散字母並多給 1-2 個干擾字母
+    const distractors = ["a", "e", "s", "t", "r"].filter(ch => !targetWord.includes(ch));
+    const extraLetter = distractors[Math.floor(Math.random() * distractors.length)] || "e";
+    const letters = (targetWord + extraLetter).split("").sort(() => 0.5 - Math.random());
+
+    availableTiles = letters.map((l, i) => ({ id: i, letter: l, used: false }));
+
+    renderSpellingSlots(targetWord.length);
+    renderSpellingTiles();
+    updateSubmitBtn(targetWord.length);
+  }
+
+  function renderSpellingSlots(len) {
+    const slotContainer = document.getElementById("spellSlots");
+    slotContainer.innerHTML = "";
+    for (let i = 0; i < len; i++) {
+      const slot = document.createElement("div");
+      slot.className = "spell-slot" + (userTypedLetters[i] ? " filled" : "");
+      slot.innerText = userTypedLetters[i] ? userTypedLetters[i].letter : "";
+      slotContainer.appendChild(slot);
+    }
+  }
+
+  function renderSpellingTiles() {
+    const tileContainer = document.getElementById("letterTiles");
+    tileContainer.innerHTML = "";
+    availableTiles.forEach(tile => {
       const btn = document.createElement("button");
-      btn.className = "option-btn";
+      btn.className = "tile-btn";
       btn.type = "button";
-      btn.innerText = optText;
-      btn.onclick = function() { handleAnswer(idx); };
-      optBox.appendChild(btn);
+      btn.innerText = tile.letter;
+      btn.disabled = tile.used || isAnswered;
+      btn.onclick = () => pickTile(tile);
+      tileContainer.appendChild(btn);
     });
   }
 
+  function pickTile(tile) {
+    const q = sessionQuestions[currentQIdx];
+    if (userTypedLetters.length < q.word.length) {
+      tile.used = true;
+      userTypedLetters.push(tile);
+      renderSpellingSlots(q.word.length);
+      renderSpellingTiles();
+      updateSubmitBtn(q.word.length);
+    }
+  }
+
+  function backspaceTile() {
+    if (isAnswered || userTypedLetters.length === 0) return;
+    const removed = userTypedLetters.pop();
+    const originalTile = availableTiles.find(t => t.id === removed.id);
+    if (originalTile) originalTile.used = false;
+
+    const q = sessionQuestions[currentQIdx];
+    renderSpellingSlots(q.word.length);
+    renderSpellingTiles();
+    updateSubmitBtn(q.word.length);
+  }
+
+  function resetTiles() {
+    if (isAnswered) return;
+    userTypedLetters = [];
+    availableTiles.forEach(t => t.used = false);
+    const q = sessionQuestions[currentQIdx];
+    renderSpellingSlots(q.word.length);
+    renderSpellingTiles();
+    updateSubmitBtn(q.word.length);
+  }
+
+  function updateSubmitBtn(targetLen) {
+    const btn = document.getElementById("btnSpellSubmit");
+    btn.disabled = (userTypedLetters.length !== targetLen) || isAnswered;
+  }
+
+  function submitSpelling() {
+    if (isAnswered) return;
+    isAnswered = true;
+
+    const q = sessionQuestions[currentQIdx];
+    const userSpelling = userTypedLetters.map(t => t.letter).join("");
+    const isCorrect = (userSpelling.toLowerCase() === q.word.toLowerCase());
+
+    const fbox = document.getElementById("feedback");
+    fbox.style.display = "block";
+
+    if (isCorrect) {
+      correctCount++;
+      fbox.className = "feedback-box correct";
+      fbox.innerHTML = "<strong>🎉 答對了！拼字非常正確！</strong><br>" + q.exp;
+    } else {
+      fbox.className = "feedback-box wrong";
+      fbox.innerHTML = "<strong>💡 差一點點！你拼成了「" + userSpelling + "」</strong><br>" + q.exp;
+      mistakes.push({
+        stem: q.stem,
+        cat: q.cat,
+        correct: q.word,
+        exp: q.exp
+      });
+    }
+
+    document.getElementById("btnSpellSubmit").disabled = true;
+    document.getElementById("btnSpellBackspace").disabled = true;
+    document.getElementById("btnSpellReset").disabled = true;
+    document.getElementById("scoreText").innerText = "即時答對：" + correctCount + " 題";
+    document.getElementById("btnNext").style.display = "block";
+  }
+
+  // 選擇題答題處理
   function handleAnswer(choiceIdx) {
     if (isAnswered) return;
     isAnswered = true;
@@ -853,15 +1140,15 @@
 
     let desc = "";
     if (score >= 90) {
-      desc = "🏆 表現超群！動作動詞、看圖理解與否定句構皆掌握得非常穩固！";
+      desc = "🏆 表現超群！單字拼字、看圖理解與句型皆掌握得非常穩固！";
     } else if (score >= 60) {
-      desc = "👍 表現良好！基礎觀念大致建立，建議多複習錯題中的否定詞 (can't/not) 與圖示對應。";
+      desc = "👍 表現良好！基礎拼讀與單字已有相當水準，多練習錯題的字母組合即可更上一層樓。";
     } else {
-      desc = "💪 繼續加油！多觀察鐘面與動詞圖片，再測一次一定會更進步！";
+      desc = "💪 繼續加油！多點選「🔊 朗讀發音」以音帶字幫助拼讀，再測一次一定會更進步！";
     }
     document.getElementById("resultDesc").innerText = desc;
 
-    // 分類統計
+    // 領域統計
     const stat = {};
     sessionQuestions.forEach(function(q) {
       if (!stat[q.cat]) stat[q.cat] = { total: 0, right: 0 };
@@ -907,7 +1194,8 @@
     const q = sessionQuestions[currentQIdx];
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
-      const txt = q.stem.replace(/<[^>]*>/g, '');
+      // 若為拼字題，直接朗讀單字，否則朗讀題目
+      const txt = q.isSpellingTiles ? q.word : q.stem.replace(/<[^>]*>/g, '');
       const utt = new SpeechSynthesisUtterance(txt);
       utt.lang = 'en-US';
       utt.rate = 0.85;
@@ -917,12 +1205,17 @@
     }
   }
 
-  // 綁定各按鈕事件監聽器（確保無內聯衝突）
+  // 事件綁定
   document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("btnStartQuiz").addEventListener("click", launchSession);
     document.getElementById("btnNext").addEventListener("click", stepNext);
     document.getElementById("btnSpeak").addEventListener("click", readAloud);
     document.getElementById("btnRestartQuiz").addEventListener("click", launchSession);
+
+    // 拼字按鈕事件
+    document.getElementById("btnSpellBackspace").addEventListener("click", backspaceTile);
+    document.getElementById("btnSpellReset").addEventListener("click", resetTiles);
+    document.getElementById("btnSpellSubmit").addEventListener("click", submitSpelling);
 
     document.getElementById("btnBackFilter").addEventListener("click", function() {
       document.getElementById("resultCard").style.display = "none";
